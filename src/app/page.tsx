@@ -23,7 +23,7 @@ export default function Home() {
           </div>
         </div>
         <Image
-          src="/images/myfoto1.jpg"
+          src="/images/profile.jpg"
           alt="Abdul Rozak"
           loading="lazy"
           width={900}
