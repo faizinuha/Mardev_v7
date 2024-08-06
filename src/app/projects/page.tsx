@@ -20,7 +20,7 @@ const page = (props: Props) => {
               className="border-2 border-secondary rounded-md p-2"
             >
               <Image
-               src="/images/profile.jpg"
+                src={item.img}
                 width={1000}
                 height={1000}
                 alt={item.title}

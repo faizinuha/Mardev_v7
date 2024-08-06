@@ -30,7 +30,7 @@ const page = (props: Props) => {
           </div>
         </div>
         <Image
-          src={"/images/myfoto2.jpg"}
+          src={"/images/profile.jpg"}
           alt="Adi Kurniawan"
           loading="lazy"
           width={1000}
