@@ -26,7 +26,7 @@ export default function RootLayout({
       <body className={poppins.className}>
         <ThemeProvider
         attribute="class"
-        defaultTheme="light"
+        defaultTheme="dark"
         enableSystem
         >
           <Navigation/>
