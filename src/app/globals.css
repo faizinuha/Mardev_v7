@@ -57,3 +57,11 @@
       @apply bg-background text-foreground;
     }
   }
+  /* styles/globals.css */
+.bg-black-custom {
+  background-color: #000000; /* Warna hitam */
+}
+
+.bg-blue-custom {
+  background-color: #0000FF; /* Warna biru */
+}

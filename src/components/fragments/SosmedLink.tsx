@@ -1,19 +1,19 @@
-import Link from 'next/link'
-import React, { ReactNode } from 'react'
+import Link from 'next/link';
+import React, { ReactNode } from 'react';
 
 type Props = {
-    url: string,
-    icon: any
-}
+    url: string;
+    icon: ReactNode;
+};
 
-const SosmedLink = (props: Props) => {
-  return (
-    <Link target='_blank' href={props.url}>
-        <span className='hover:text-primary delay-75 ease-in-out'>
-            <props.icon width={30} height={30} />
-        </span>
-    </Link>
-  )
-}
+const SosmedLink = ({ url, icon }: Props) => {
+    return (
+        <Link target='_blank' href={url}>
+            <span className='hover:bg-primary bg-blue-500 delay-0 ease-in-out'>
+                {icon}
+            </span>
+        </Link>
+    );
+};
 
-export default SosmedLink
+export default SosmedLink;

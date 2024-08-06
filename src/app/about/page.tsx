@@ -14,8 +14,8 @@ const page = (props: Props) => {
           <div className="w-full lg:w-[96%]">
             <h1 className="text-4xl font-bold text-primary">About me</h1>
             <p>
-              Hi, I'm Adi Kurniawan a high school vocation student majoring in
-              Software Engineering, a lifetime learner, and a Fullstack Web
+              Hi, I'm Abdul rozak a high school vocation student majoring in
+              Front end Devloment, a lifetime learner, and a Fullstack Web
               Developer based in Jawa Timur, Indonesia.
             </p>
             <p>
@@ -30,13 +30,13 @@ const page = (props: Props) => {
           </div>
         </div>
         <Image
-          src={"/images/myfoto.jpg"}
+          src={"/images/myfoto2.jpg"}
           alt="Adi Kurniawan"
           loading="lazy"
           width={1000}
           height={1000}
           objectFit="cover"
-          className="w-32 lg:w-60 rounded-xl border-secondary border-[5px] mx-auto  rotate-12"
+          className="w-32 lg:w-60 rounded-xl border-secondary border-[5px] mx-auto rotate-12"
         />
       </div>
       <div className="mt-10">
@@ -63,21 +63,7 @@ const page = (props: Props) => {
                 <Badge
                   className="hover:bg-primary cursor-pointer hover:text-white"
                   variant={"secondary"}
-                  key={i + "language"}
-                >
-                  {item}
-                </Badge>
-              ))}
-            </div>
-          </div>
-          <div className="border-accent border-2 p-2 rounded-md">
-            <h3>Backend</h3>
-            <div className="grid grid-cols-2 gap-2 mt-3 ">
-              {backend.map((item: string, i: number) => (
-                <Badge
-                  className="hover:bg-primary cursor-pointer hover:text-white"
-                  variant={"secondary"}
-                  key={i + "language"}
+                  key={i + "frontend"}
                 >
                   {item}
                 </Badge>
@@ -88,7 +74,7 @@ const page = (props: Props) => {
       </div>
       <div>
         <h2 className="flex items-center gap-1 text-4xl font-bold text-primary mt-10">
-          <HiMiniBuildingOffice2 /> Experience{" "}
+          <HiMiniBuildingOffice2 /> Experience
           <hr className="w-full border-2 border-secondary" />
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-3">
@@ -106,7 +92,7 @@ const page = (props: Props) => {
       </div>
       <div>
         <h2 className="flex items-center gap-1 text-4xl font-bold text-primary mt-10">
-          <FaSchool /> Education{" "}
+          <FaSchool /> Education
           <hr className="w-full border-2 border-secondary" />
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-3">
@@ -143,44 +129,34 @@ type Education = {
 const language = [
   "Html & Css",
   "JavaScript",
-  "Java",
+  // "Java",
   "PHP",
   "TypeScript",
-  "C#",
-  "Kotlin",
+  // "C#",
+  // "Kotlin",
   "Python",
 ];
 
 const frontend = [
-  "React.JS",
+  // "React.JS",
   "Next.JS",
   "Tailwind CSS",
-  "ShadCn",
+  // "ShadCn",
   "Daisy UI",
   "Bootstrap 5",
   "JQuery",
-  "Recoil.JS",
-];
-
-const backend = [
-  "Asp.Net",
-  "Laravel",
-  "Mysql",
-  "Postgresql",
-  "Sql Server",
-  "Adonis.JS",
-  "Hono.Js",
+  // "Recoil.JS",
 ];
 
 const experience = [
   {
     title: "PT HUMMA TEKNOLOGI INDONESIA",
-    position: "Web Developer (Internship)",
+    position: "Web Developer",
     years: "2023",
   },
   {
     title: "UT SCHOOL",
-    position: "Fullstack Programmer",
+    position: "FrontEnd Programmer",
     years: "2024",
   },
 ];
@@ -190,7 +166,7 @@ const education = [
     name: "SMKN 1 MEJAYAN",
     position: "Vocational High School",
     major: "Rekayasa Perangkat Lunak",
-    duration: "2022-Present",
+    duration: "2024-Present",
   },
   {
     name: "SMPN 2 NGLAMES",
