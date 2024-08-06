@@ -81,7 +81,7 @@ const projects = [
     title: "NihonFlixe",
     img: "/images/projects/NihonFlixe.jpg",
     description:
-      "Website Instrumen Bimbingan Konseling yang memiliki beberapa tujuan, salah satunya instrumen yang digunakan untuk mendeteksi kecerdasan anak",
+      "Website Bioskop Non Template Kami membuat ini dengan Laravel 11 Dan Gunakan Laravel Ui Piur Bootstrap && Css",
     url: "pages.tsx",
     // target: "_blank",
     category: ["Web"],
@@ -91,7 +91,7 @@ const projects = [
     title: "Online_Shop",
     img: "/images/projects/Onlne_shop.jpg",
     description:
-      "Package yang saya buat ketika waktu saya bosan.Package ini dibuat untuk menyelesaikan permasalahan dasar matematika lewat pemrograman",
+      "Website ini dari Gabungan Php Native dan Stisla Tahap Pengembangan",
     url: "#",
     category: ["Online_Shop"],
     tech: ["php Native", "Stisla"],
