@@ -18,13 +18,13 @@ const NavigationLink = (props: Props) => {
         text
     } = props
 
-    const variant = "text-primary delay-100 ease-in-out"
+    const variant = "text-cyan-400 delay-100 ease-in-out"
 
     const isActive = params == url
 
   return (
     <li className={`list-none`}>
-        <Link className={`text-sm font-medium hover:text-primary transition-all delay-75 ${isActive && variant}`} href={url}>{text}</Link>
+        <Link className={`text-sm font-medium hover:text-teal-400 transition-all delay-75 ${isActive && variant}`} href={url}>{text}</Link>
     </li>
   )
 }
