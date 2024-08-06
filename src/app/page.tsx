@@ -13,7 +13,7 @@ export default function Home() {
             <br />
             <span className="text-primary font-bold">Abdul Rozak</span>
           </h1>
-          <h2 className="text-center lg:text-start lg:w-9/12">
+          <h2 className="text-center lg:text-start lg:w-9/12 underline-offset-2">
             I am a Front End Beginner
           </h2>
           <div className="flex gap-2 mt-3 justify-center lg:justify-start">
@@ -22,15 +22,15 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <Image
-          src="/images/profile.jpg"
-          alt="Abdul Rozak"
-          loading="lazy"
-          width={900}
-          height={900}
-          objectFit="cover"
-          className="w-20 lg:w-60 rounded-full border-secondary border-8 mx-auto lg:mx-0"
-        />
+      <Image
+        src="/images/profile.jpg"
+        alt="Abdul Rozak"
+        loading="lazy"
+        width={800}
+        height={800}
+        objectFit="cover"
+        className="w-60 h-60 rounded-full border-secondary border-8  lg:mx-0"
+      />
       </div>
       <div className="w-full mt-10">
         <h2 className="text-4xl font-bold text-primary mb-6 text-center">
@@ -82,7 +82,7 @@ const skills: Skill[] = [
   {
     name: "Tailwind CSS",
     description: "Utility-first CSS framework for styling.",
-    },
+  },
   {
     name: "Bootstrap 5",
     description: "Popular CSS framework web design.",
@@ -94,5 +94,5 @@ const skills: Skill[] = [
   {
     name: "GitHub ",
     description: "Popular CSS framework for responsive web design.",
-  }
+  },
 ];
