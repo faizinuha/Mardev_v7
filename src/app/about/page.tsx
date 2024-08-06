@@ -2,10 +2,11 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { HiMiniBuildingOffice2 } from "react-icons/hi2";
 import { FaSchool } from "react-icons/fa6";
+import { FaFigma } from "react-icons/fa6";
 
 type Props = {};
 
-const page = (props: Props) => {
+const Page = (props: Props) => {
   return (
     <div className="lg:px-10">
       <div className="fixed top-10"></div>
@@ -14,24 +15,25 @@ const page = (props: Props) => {
           <div className="w-full lg:w-[96%]">
             <h1 className="text-4xl font-bold text-primary">About me</h1>
             <p>
-              Hi, I'm Abdul rozak a high school vocation student majoring in
-              Front end Devloment, a lifetime learner, and a Fullstack Web
+              Hi, I'm Abdul Rozak, a high school vocational student majoring in
+              Front-end Development, a lifetime learner, and a Fullstack Web
               Developer based in Jawa Timur, Indonesia.
             </p>
             <p>
-              I am someone who is interested in the world of technology, linux
-              operating systems and open source software development.
+              I am someone who is interested in the world of technology, Windows
+              10 operating systems, and open source All Language Projects
+              development.
             </p>
             <p>
               I love learning new things, even when I'm bored I often learn new
-              things. I fill my free time by learning new things, trying new
-              linux distros, playing games, and sometimes watching anime.
+              things. I fill my free time by learning new things, trying
+              distros, playing games, and sometimes watching anime.
             </p>
           </div>
         </div>
         <Image
-          src={"/images/profile.jpg"}
-          alt="Abdul rozak"
+          src="/images/profile.jpg"
+          alt="Abdul Rozak"
           loading="lazy"
           width={1000}
           height={1000}
@@ -49,8 +51,7 @@ const page = (props: Props) => {
                 <Badge
                   className="hover:bg-primary cursor-pointer hover:text-white"
                   variant={"secondary"}
-                  key={i + "language"}
-                >
+                  key={i + "language"}>
                   {item}
                 </Badge>
               ))}
@@ -63,8 +64,7 @@ const page = (props: Props) => {
                 <Badge
                   className="hover:bg-primary cursor-pointer hover:text-white"
                   variant={"secondary"}
-                  key={i + "frontend"}
-                >
+                  key={i + "frontend"}>
                   {item}
                 </Badge>
               ))}
@@ -81,8 +81,7 @@ const page = (props: Props) => {
           {experience.map((item: Experience, index: number) => (
             <div
               key={index}
-              className="border-secondary border-2 rounded-md p-2"
-            >
+              className="border-secondary border-2 rounded-md p-2">
               <h3 className="font-semibold text-primary">{item.title}</h3>
               <p>{item.position}</p>
               <p>{item.years}</p>
@@ -99,12 +98,29 @@ const page = (props: Props) => {
           {education.map((item: Education, index: number) => (
             <div
               key={index}
-              className="border-secondary border-2 rounded-md p-2"
-            >
+              className="border-secondary border-2 rounded-md p-2">
               <h3 className="font-semibold text-primary">{item.name}</h3>
               <p>{item.position}</p>
               <p>{item.major}</p>
               <p>{item.duration}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <h2 className="flex items-center gap-1 text-4xl font-bold text-primary mt-10">
+          <FaFigma /> Web Desain
+          <hr className="w-full border-2 border-secondary" />
+        </h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-3">
+          {desain.map((item, index) => (
+            <div
+              key={index}
+              className="border-secondary border-2 rounded-md p-2">
+              <h3 className="font-semibold text-primary">{item.name}</h3>
+              <p>{item.position}</p>
+              {/* <p>{item.major}</p>
+              <p>{item.duration}</p> */}
             </div>
           ))}
         </div>
@@ -125,27 +141,20 @@ type Education = {
   major: string;
   duration: string;
 };
-
-const language = [
-  "Html & Css",
-  "JavaScript",
-  // "Java",
-  "PHP",
-  "TypeScript",
-  // "C#",
-  // "Kotlin",
-  "Python",
-];
+type Desain = {
+  name: string;
+  position: string;
+  major: string;
+  duration: string;
+};
+const language = ["Html & Css", "JavaScript", "PHP", "TypeScript", "Python"];
 
 const frontend = [
-  // "React.JS",
   "Next.JS",
   "Tailwind CSS",
-  // "ShadCn",
-  "Daisy UI",
+  "Angular Js learn",
   "Bootstrap 5",
   "JQuery",
-  // "Recoil.JS",
 ];
 
 const experience = [
@@ -160,20 +169,36 @@ const experience = [
     years: "2024",
   },
 ];
-
+const desain = [
+  {
+    name: "Web Simpel Navbar",
+    position: "Figma",
+    // position: "Position 1",
+    // major: "Major 1",
+    // duration: "2021-2022",
+  },
+  {
+    name: "FlowCart",
+    position: "Figma",
+    // position: "Position 2",
+    // major: "Major 2",
+    // duration: "2020-2021",
+  },
+  // Tambahkan lebih banyak data desain di sini
+];
 const education = [
   {
-    name: "SMKN 1 MEJAYAN",
+    name: "SMKN Al Azhar",
     position: "Vocational High School",
     major: "Rekayasa Perangkat Lunak",
     duration: "2024-Present",
   },
   {
-    name: "SMPN 2 NGLAMES",
+    name: "SMK AL AZHAR ",
     position: "Junior High School",
-    major: "-",
+    major: "FronEnd",
     duration: "2019-2022",
   },
 ];
 
-export default page;
+export default Page;
