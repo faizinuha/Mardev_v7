@@ -59,7 +59,8 @@
   }
   /* styles/globals.css */
 .bg-black-custom {
-  background-color: #000000; /* Warna hitam */
+  background-color: #0000; /* Warna hitam */
+  opacity: 1;
 }
 
 .bg-blue-custom {
