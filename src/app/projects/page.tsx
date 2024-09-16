@@ -1,11 +1,25 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
+import Swal from "sweetalert2";
 
 type Props = {};
 
-const page = (props: Props) => {
+const page = () => {
+  const handleClick = (url: string) => {
+    if (!url) {
+      Swal.fire({
+        icon: "info",
+        title: "No Link Available",
+        text: "Sorry, this project doesn't have a link yet.",
+      });
+    } else {
+      window.open(url, "_blank");
+    }
+  };
+
   return (
     <div>
       <h1 className="text-4xl font-bold text-primary">Latest projects</h1>
@@ -15,10 +29,10 @@ const page = (props: Props) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 p-2 gap-10">
         {projects &&
           projects.map((item: Projects, index: number) => (
-            <Link
-              href={item.url}
-              className="border-2 border-secondary rounded-md p-2"
-            >
+            <div
+              key={index}
+              className="border-2 border-secondary rounded-md p-2 cursor-pointer"
+              onClick={() => handleClick(item.url)}>
               <Image
                 src={item.img}
                 width={1000}
@@ -26,28 +40,35 @@ const page = (props: Props) => {
                 alt={item.title}
                 loading="lazy"
               />
+              {/* Pengecekan apakah item.tech ada */}
               <div className="flex flex-wrap gap-2 mt-2">
-                {item.tech.map((item: string, index: number) => (
-                  <Badge className="hover:bg-primary" variant={"secondary"}>
-                    {item}
-                  </Badge>
-                ))}
+                {item.tech &&
+                  item.tech.map((techItem: string, techIndex: number) => (
+                    <Badge
+                      key={techIndex}
+                      className="hover:bg-primary"
+                      variant={"secondary"}>
+                      {techItem}
+                    </Badge>
+                  ))}
               </div>
               <h2 className="text-primary font-bold text-xl">{item.title}</h2>
               <p className="text-sm">{item.description}</p>
+              {/* Pengecekan apakah item.category ada */}
               <div className="flex gap-2 mt-5">
-                {item.category.map((item: string, index: number) => (
-                  <Badge key={`${index}-item`}>{item}</Badge>
-                ))}
+                {item.category &&
+                  item.category.map(
+                    (categoryItem: string, categoryIndex: number) => (
+                      <Badge key={categoryIndex}>{categoryItem}</Badge>
+                    )
+                  )}
               </div>
-            </Link>
+            </div>
           ))}
       </div>
     </div>
   );
 };
-
-type Category = "Web" | "App" | "Software" | "Api" | "Package" | "Development";
 
 type Projects = {
   title: string;
@@ -58,7 +79,7 @@ type Projects = {
   category: string[];
 };
 
-const projects = [
+const projects: Projects[] = [
   {
     title: "Twitters",
     img: "/images/projects/Twitters_Beta.jpg",
@@ -66,33 +87,31 @@ const projects = [
       "The social media website that we manage is the same as other social media with a protection system.",
     url: "#",
     category: ["Web"],
-    tech: ["Php Native","Bootstrap 5","Tailwind","Stisla Admin"],
+    tech: ["Php Native", "Bootstrap 5", "Tailwind", "Stisla Admin"],
   },
   {
     title: "S-market",
     img: "/images/projects/S-market.jpg",
     description: "Website untuk master data yang diperlukan aplikasi sekolah",
     url: "https://tray-again.vercel.app/",
-    target: "_blank",
     category: ["Web"],
-    tech: ["Html && Css "],
+    tech: ["Html && Css"],
   },
   {
     title: "NihonFlixe",
     img: "/images/projects/NihonFlixe.jpg",
     description:
       "Website Bioskop Non Template Kami membuat ini dengan Laravel 11 Dan Gunakan Laravel Ui Piur Bootstrap && Css",
-    url: "pages.tsx",
-    // target: "_blank",
+    url: "",
     category: ["Web"],
-    tech: ["Laravel", "Bootstrap", "Jquery", "Laravel Liveware"],
+    tech: ["Laravel", "Bootstrap", "Jquery", "Laravel Livewire"],
   },
   {
     title: "Online_Shop",
     img: "/images/projects/Onlne_shop.jpg",
     description:
       "Website ini dari Gabungan Php Native dan Stisla Tahap Pengembangan",
-    url: "#",
+    url: "",
     category: ["Online_Shop"],
     tech: ["php Native", "Stisla"],
   },
@@ -109,10 +128,25 @@ const projects = [
     img: "/images/projects/Portfolio.jpg",
     description: "My personal portfolio website.",
     url: "https://portfolio-wine-three-29.vercel.app/",
-    target: "_blank",
     category: ["Web"],
-    tech: ["Html & Css ","Portfolio"],
+    tech: ["Html & Css ", "Portfolio"],
   },
+  {
+    title: "Aplikasi Laundry Beta",
+    img: "/images/projects/download.png",
+    description: "Aplikasi untuk layanan laundry dalam versi Beta.",
+    url: "", // No URL provided
+    category: ["App"],
+    tech: ["Php", "Bootstrap"],
+  },
+  // {
+  //   title: "Aplikasi Laundry Beta",
+  //   img: "/images/projects/download.png",
+  //   description: "Aplikasi untuk layanan laundry dalam versi Beta.",
+  //   url: "", // No URL provided
+  //   category: ["App"],
+  //   tech: ["Php", "Bootstrap"],
+  // },
 ];
 
 export default page;
