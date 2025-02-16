@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import { InstagramLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
 import SosmedLink from "@/components/fragments/SosmedLink";
-import { ReactNode, useState, useEffect } from "react";
+import { GitHubLogoIcon, InstagramLogoIcon } from "@radix-ui/react-icons";
+import Image from "next/image";
+import { ReactNode, useEffect, useState } from "react";
 
 export default function Home() {
   const [displayText, setDisplayText] = useState('');
@@ -31,11 +31,11 @@ export default function Home() {
   const sosMed: SosMed[] = [
     {
       icon: <InstagramLogoIcon width={30} height={30} />,
-      url: "https://www.instagram.com/wolfcode7_/",
+      url: "#",
     },
     {
       icon: <GitHubLogoIcon width={30} height={30} />,
-      url: "https://github.com/faizinuha",
+      url: "#",
     },
   ];
 
@@ -69,7 +69,7 @@ export default function Home() {
             <h1 className="text-4xl md:text-5xl lg:text-7xl text-center lg:text-start">
               <span className="hidden lg:inline">I'am</span>
               <br />
-              <span className="text-green-500 font-bold">Abdul Rozak</span>
+              <span className="text-green-500 font-bold">John</span>
             </h1>
             <h2 className="text-center lg:text-start lg:w-9/12 underline-offset-2">
               {displayText}
@@ -82,8 +82,8 @@ export default function Home() {
             </div>
           </div>
           <Image
-            src="/images/profile.jpg"
-            alt="Abdul Rozak"
+            src="/images/Avatar.png"
+            alt="John"
             loading="lazy"
             width={800}
             height={800}
