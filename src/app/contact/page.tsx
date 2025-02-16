@@ -1,7 +1,6 @@
+import { GitHubLogoIcon, InstagramLogoIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
-import React from "react";
 import { MdEmail } from "react-icons/md";
-import { InstagramLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
 
 type Props = {};
 
@@ -14,21 +13,21 @@ const page = (props: Props) => {
         className="flex items-center text-lg gap-2 mb-4"
         href="mailto:rozakadm@gmail.com">
         <MdEmail />
-        Rozakadm@gmail.com
+        John@gEzample.com
       </a>
       <p className="mt-1 mb-2">or via socials below:</p>
       <div className="flex flex-col gap-2">
         <Link
           className="flex gap-2 items-center"
-          href="https://www.instagram.com/wolfcode7_/">
+          href="">
           <InstagramLogoIcon />
-          <b>Instagram - </b> _wolfcode7_/
+          <b>Instagram - </b> John
         </Link>
         <Link
           className="flex gap-2 items-center"
-          href="https://github.com/faizinuha">
+          href="#">
           <GitHubLogoIcon />
-          <b>GitHub - </b> Abdul Rozak
+          <b>GitHub - </b> John
         </Link>
       </div>
     </div>

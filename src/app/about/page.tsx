@@ -1,8 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
+import { FaFigma, FaSchool } from "react-icons/fa6";
 import { HiMiniBuildingOffice2 } from "react-icons/hi2";
-import { FaSchool } from "react-icons/fa6";
-import { FaFigma } from "react-icons/fa6";
 
 type Props = {};
 
@@ -15,7 +14,7 @@ const page = (props: Props) => {
           <div className="w-full lg:w-[96%]">
             <h1 className="text-4xl font-bold text-primary">About me</h1>
             <p>
-              Hi, I'm Abdul Rozak, a Frontend Developer with a basic
+              Hi, I'm John, a Frontend Developer with a basic
               understanding of Backend, Web Designer (Figma, Canva), and a
               self-taught UI Programmer from Japan. I am passionate about
               creating intuitive user interfaces and developing functional web
@@ -36,8 +35,8 @@ const page = (props: Props) => {
           </div>
         </div>
         <Image
-          src={"/images/profile.jpg"}
-          alt="Abdul Rozak"
+          src={"/images/Avatar.png"}
+          alt="John"
           loading="lazy"
           width={1000}
           height={1000}
