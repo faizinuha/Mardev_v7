@@ -36,7 +36,7 @@ const page = (props: Props) => {
           </div>
         </div>
         <Image
-          src={"/images/profile.jpg"}
+          src={"/images/news.jpeg"}
           alt="Abdul Rozak"
           loading="lazy"
           width={1000}

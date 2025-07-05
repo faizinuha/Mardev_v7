@@ -153,6 +153,15 @@ const projects: Projects[] = [
     tech: ["Html & Css ", "Portfolio"],
   },
   {
+    title: "Kamus Pali Indonesia",
+    img: "/images/Kamus.jpeg",
+    description: "Aplikasi kamus Pali-Indonesia.",
+    url: "https://github.com/faizinuha/KamusPaliIndonesia",
+    category: ["App"],
+    tech: ["Php", "Bootstrap"],
+  },
+  
+  {
     title: "Aplikasi Laundry Beta",
     img: "/images/projects/download.png",
     description: "Aplikasi untuk layanan laundry dalam versi Beta.",
