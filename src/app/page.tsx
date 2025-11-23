@@ -1,168 +1,313 @@
 "use client";
 
 import SosmedLink from "@/components/fragments/SosmedLink";
-import { GitHubLogoIcon, InstagramLogoIcon } from "@radix-ui/react-icons";
+import { GitHubLogoIcon, InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { ReactNode, useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 
 export default function Home() {
   const [displayText, setDisplayText] = useState('');
-  const text = " I am a Front End Beginner";
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
 
+  const texts = [
+    "Frontend Developer",
+    "Backend Developer"
+  ];
+
+  // Advanced Typing Animation
   useEffect(() => {
-    let i = 0;
-    const intervalId = setInterval(() => {
-      setDisplayText((prev) => prev + (text[i] || ''));
-      i++;
-      if (i >= text.length) {
-        i = 0;
-        setDisplayText('');
+    const currentText = texts[currentTextIndex];
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        if (displayText.length < currentText.length) {
+          setDisplayText(currentText.substring(0, displayText.length + 1));
+        } else {
+          setTimeout(() => setIsDeleting(true), 2000);
+        }
+      } else {
+        if (displayText.length > 0) {
+          setDisplayText(currentText.substring(0, displayText.length - 1));
+        } else {
+          setIsDeleting(false);
+          setCurrentTextIndex((prev) => (prev + 1) % texts.length);
+        }
       }
-    }, 200);
+    }, isDeleting ? 50 : 100);
 
-    return () => clearInterval(intervalId);
-  }, []);
+    return () => clearTimeout(timeout);
+  }, [displayText, isDeleting, currentTextIndex]);
+
+  const { ref: skillsRef, inView: skillsInView } = useInView({
+    threshold: 0.2,
+    triggerOnce: true,
+  });
 
   type SosMed = {
     icon: ReactNode;
     url: string;
+    label: string;
   };
 
   const sosMed: SosMed[] = [
     {
-      icon: <InstagramLogoIcon width={30} height={30} />,
+      icon: <InstagramLogoIcon width={24} height={24} />,
       url: "#",
+      label: "Instagram"
     },
     {
-      icon: <GitHubLogoIcon width={30} height={30} />,
+      icon: <GitHubLogoIcon width={24} height={24} />,
       url: "#",
+      label: "GitHub"
+    },
+    {
+      icon: <LinkedInLogoIcon width={24} height={24} />,
+      url: "#",
+      label: "LinkedIn"
     },
   ];
 
   type Skill = {
     name: string;
     description: string;
+    icon: string;
   };
 
   const skills: Skill[] = [
-    { name: "HTML & CSS", description: "Building the structure and style of web pages." },
-    { name: "JavaScript", description: "Adding interactivity to web pages." },
-    { name: "PHP", description: "Server-side scripting for web development." },
-    { name: "Tailwind CSS", description: "Utility-first CSS framework for styling." },
-    { name: "Bootstrap 5", description: "Popular CSS framework for web design." },
-    { name: "Python", description: "Python Beginner" },
-    { name: "GitHub", description: "Version control for collaborative projects." },
+    { name: "HTML & CSS", description: "Building the structure and style of web pages.", icon: "🎨" },
+    { name: "JavaScript", description: "Adding interactivity to web pages.", icon: "⚡" },
+    { name: "PHP", description: "Server-side scripting for web development.", icon: "🐘" },
+    { name: "Tailwind CSS", description: "Utility-first CSS framework for styling.", icon: "💨" },
+    { name: "Bootstrap 5", description: "Popular CSS framework for web design.", icon: "🅱️" },
+    { name: "Python", description: "Python Beginner", icon: "🐍" },
+    { name: "GitHub", description: "Version control for collaborative projects.", icon: "🔧" },
   ];
 
+  // Animation Variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3,
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 10
+      }
+    }
+  };
+
+  const imageVariants = {
+    hidden: { scale: 0.8, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15
+      }
+    }
+  };
+
   return (
-    <div className="relative overflow-hidden">
-      {/* Background Decorations */}
+    <div className="relative overflow-hidden min-h-screen">
+      {/* Enhanced Background Decorations */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full blur-3xl opacity-30 animate-float"></div>
-        <div className="absolute bottom-0 right-0 w-72 h-72 bg-gradient-to-r from-green-500 to-yellow-500 rounded-full blur-3xl opacity-30 animate-float delay-2"></div>
+        <motion.div
+          className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full blur-3xl opacity-20"
+          animate={{
+            y: [0, -30, 0],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute bottom-0 right-0 w-72 h-72 bg-gradient-to-r from-pink-500 to-yellow-500 rounded-full blur-3xl opacity-20"
+          animate={{
+            y: [0, 30, 0],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 w-64 h-64 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full blur-3xl opacity-15"
+          animate={{
+            x: [-100, 100, -100],
+            y: [-50, 50, -50],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col gap-8 animate-fade-in">
-        <div className="flex flex-col gap-8 lg:flex-row lg:justify-evenly">
-          <div className="p-0 m-0">
-            <h1 className="text-4xl md:text-5xl lg:text-7xl text-center lg:text-start">
-              <span className="hidden lg:inline">I'am</span>
-              <br />
-              <span className="text-green-500 font-bold">John</span>
-            </h1>
-            <h2 className="text-center lg:text-start lg:w-9/12 underline-offset-2">
-              {displayText}
-              <span className="blinking-cursor">|</span>
-            </h2>
-            <div className="flex gap-2 mt-3 justify-center lg:justify-start">
-              {sosMed.map((item, i) => (
-                <SosmedLink key={i} icon={item.icon} url={item.url} />
-              ))}
-            </div>
-          </div>
-          <Image
-            src="/images/Avatar.png"
-            alt="John"
-            loading="lazy"
-            width={800}
-            height={800}
-            style={{ objectFit: "cover" }}
-            className="w-60 h-60 rounded-full border-secondary border-8  lg:mx-0"
-          />
-        </div>
-        <div className="w-full mt-10">
-          <h2 className="text-4xl font-bold text-primary mb-6 text-center">
-            Skills
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {skills.map((skill, i) => (
-              <div
-                key={i}
-                className="bg-blue-400 shadow-md rounded-lg p-6 text-center animate-scale-in"
+      <motion.div
+        className="relative z-10 flex flex-col gap-16 py-10 lg:py-20"
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+      >
+        {/* Hero Section */}
+        <div className="flex flex-col gap-8 lg:flex-row lg:justify-evenly lg:items-center px-5 lg:px-10">
+          <motion.div className="p-0 m-0 space-y-6" variants={itemVariants}>
+            <div>
+              <motion.h1
+                className="text-5xl md:text-6xl lg:text-8xl text-center lg:text-start font-display font-extrabold"
+                variants={itemVariants}
               >
-                <h3 className="text-xl font-semibold mb-2">{skill.name}</h3>
-                <p>{skill.description}</p>
-              </div>
-            ))}
-          </div>
+                <span className="hidden lg:inline text-foreground/80">I'm</span>
+                <br />
+                <span className="gradient-text-ocean">Zaki</span>
+              </motion.h1>
+
+              <motion.h2
+                className="text-xl md:text-2xl lg:text-3xl text-center lg:text-start mt-4 font-medium min-h-[2.5rem]"
+                variants={itemVariants}
+              >
+                <span className="gradient-text">{displayText}</span>
+                <span className="blinking-cursor text-primary">|</span>
+              </motion.h2>
+            </div>
+
+            {/* CTA Buttons */}
+            <motion.div
+              className="flex gap-4 mt-6 justify-center lg:justify-start flex-wrap"
+              variants={itemVariants}
+            >
+              <motion.button
+                className="group relative px-8 py-3 bg-primary text-primary-foreground rounded-full font-semibold overflow-hidden transition-smooth"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className="relative z-10">View My Work</span>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.button>
+
+              <motion.button
+                className="px-8 py-3 border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-primary-foreground transition-smooth"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Download Resume
+              </motion.button>
+            </motion.div>
+
+            {/* Social Media Links */}
+            <motion.div
+              className="flex gap-4 mt-6 justify-center lg:justify-start"
+              variants={itemVariants}
+            >
+              {sosMed.map((item, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ scale: 1.1, y: -5 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <SosmedLink icon={item.icon} url={item.url} />
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
+
+          {/* Profile Image with Enhanced Animation */}
+          <motion.div
+            variants={imageVariants}
+            whileHover={{
+              scale: 1.05,
+              rotate: 5, // Changed from array to single value to avoid spring error
+              transition: { duration: 0.3 }
+            }}
+            className="relative"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full blur-2xl opacity-30 animate-pulse" />
+            <Image
+              src="/images/Avatar.png"
+              alt="John"
+              loading="eager"
+              width={800}
+              height={800}
+              priority
+              className="relative w-64 h-64 lg:w-80 lg:h-80 rounded-full border-4 border-primary/30 shadow-2xl mx-auto object-cover"
+            />
+          </motion.div>
         </div>
-      </div>
 
-      {/* Animations */}
-      <style jsx>{`
-        .animate-fade-in {
-          animation: fadeIn 1.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
+        {/* Skills Section */}
+        <motion.div
+          ref={skillsRef}
+          className="w-full px-5 lg:px-10"
+          initial="hidden"
+          animate={skillsInView ? "visible" : "hidden"}
+          variants={containerVariants}
+        >
+          <motion.h2
+            className="text-4xl lg:text-5xl font-display font-bold text-center mb-10 gradient-text"
+            variants={itemVariants}
+          >
+            Skills & Expertise
+          </motion.h2>
 
-        .animate-scale-in {
-          animation: scaleIn 0.8s ease-in-out;
-        }
-        @keyframes scaleIn {
-          from {
-            transform: scale(0.8);
-            opacity: 0;
-          }
-          to {
-            transform: scale(1);
-            opacity: 1;
-          }
-        }
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            variants={containerVariants}
+          >
+            {skills.map((skill, i) => (
+              <motion.div
+                key={i}
+                variants={itemVariants}
+                whileHover={{
+                  y: -10,
+                  boxShadow: "0 20px 40px rgba(0, 0, 0, 0.2)"
+                }}
+                className="group relative bg-card border border-border rounded-2xl p-6 text-center transition-smooth overflow-hidden"
+              >
+                {/* Gradient Background on Hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-20px);
-          }
-        }
-
-        .delay-2 {
-          animation-delay: 2s;
-        }
-
-        .blinking-cursor {
-          animation: blink 0.8s infinite;
-        }
-
-        @keyframes blink {
-          0% { opacity: 0; }
-          50% { opacity: 1; }
-          100% { opacity: 0; }
-        }
-      `}</style>
+                <div className="relative z-10">
+                  <div className="text-5xl mb-3">{skill.icon}</div>
+                  <h3 className="text-xl font-semibold mb-2 text-foreground group-hover:text-primary transition-colors">
+                    {skill.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">{skill.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

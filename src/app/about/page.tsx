@@ -1,28 +1,60 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
 import Image from "next/image";
+import { FaFigma, FaSchool } from "react-icons/fa6";
 import { HiMiniBuildingOffice2 } from "react-icons/hi2";
-import { FaSchool } from "react-icons/fa6";
-import { FaFigma } from "react-icons/fa6";
+import { useInView } from "react-intersection-observer";
 
 type Props = {};
 
-const page = (props: Props) => {
+const AboutPage = (props: Props) => {
+  const { ref: aboutRef, inView: aboutInView } = useInView({ threshold: 0.2, triggerOnce: true });
+  const { ref: skillsRef, inView: skillsInView } = useInView({ threshold: 0.2, triggerOnce: true });
+  const { ref: experienceRef, inView: experienceInView } = useInView({ threshold: 0.2, triggerOnce: true });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { type: "spring", stiffness: 100 }
+    }
+  };
+
   return (
-    <div className="lg:px-10">
-      <div className="fixed top-10"></div>
-      <div className="flex w-full flex-col-reverse lg:flex-row">
-        <div className="w-full mt-5 lg:mt-0">
-          <div className="w-full lg:w-[96%]">
-            <h1 className="text-4xl font-bold text-primary">About me</h1>
+    <div className="min-h-screen py-10 px-5 lg:px-20 space-y-16">
+      {/* About Section */}
+      <motion.div
+        ref={aboutRef}
+        initial="hidden"
+        animate={aboutInView ? "visible" : "hidden"}
+        variants={containerVariants}
+        className="flex flex-col-reverse lg:flex-row gap-10 items-center"
+      >
+        <motion.div variants={itemVariants} className="w-full lg:w-2/3 space-y-4">
+          <h1 className="text-5xl lg:text-6xl font-display font-bold">
+            <span className="gradient-text">About Me</span>
+          </h1>
+          <div className="space-y-4 text-muted-foreground leading-relaxed">
             <p>
-              Hi, I'm Abdul Rozak, a Frontend Developer with a basic
+              Hi, I'm <span className="text-primary font-semibold">Abdul Rozak</span>, a frontend and backend Developer with a basic
               understanding of Backend, Web Designer (Figma, Canva), and a
-              self-taught UI Programmer from Japan. I am passionate about
+              self-taught UI Programmer from Indoneia/Japan. I am passionate about
               creating intuitive user interfaces and developing functional web
               applications.
             </p>
             <p>
-              I enjoy working with both frontend and backend technologies, and
+              I enjoy working with both frontend and backend and backend technologies, and
               I'm constantly improving my skills. My learning journey has been
               shaped by hands-on experience and the pursuit of knowledge through
               online resources and personal projects.
@@ -34,128 +66,240 @@ const page = (props: Props) => {
               with different UI designs.
             </p>
           </div>
-        </div>
-        <Image
-          src={"/images/news.jpeg"}
-          alt="Abdul Rozak"
-          loading="lazy"
-          width={1000}
-          height={1000}
-          objectFit="cover"
-          className="w-32 lg:w-60 rounded-xl border-secondary border-[5px] mx-auto  rotate-12"
-        />
-      </div>
-      <div className="mt-10">
-        <h2 className="text-4xl font-bold text-primary">Skillset</h2>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 ">
-          <div className="border-accent border-2 p-2 rounded-md">
-            <h3>Language</h3>
-            <div className="grid grid-cols-2 gap-2 mt-3 ">
+        </motion.div>
+
+        <motion.div
+          variants={itemVariants}
+          whileHover={{ rotate: 0, scale: 1.05 }}
+          className="relative"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur-2xl opacity-30" />
+          <Image
+            src={"/images/news.jpeg"}
+            alt="Abdul Rozak"
+            loading="lazy"
+            width={1000}
+            height={1000}
+            className="relative w-64 lg:w-80 rounded-2xl border-4 border-primary/30 shadow-2xl object-cover rotate-3 hover:rotate-0 transition-transform duration-300"
+          />
+        </motion.div>
+      </motion.div>
+
+      {/* Skills Section */}
+      <motion.div
+        ref={skillsRef}
+        initial="hidden"
+        animate={skillsInView ? "visible" : "hidden"}
+        variants={containerVariants}
+        className="space-y-8"
+      >
+        <motion.h2 variants={itemVariants} className="text-4xl lg:text-5xl font-display font-bold text-center">
+          <span className="gradient-text-ocean">Skillset</span>
+        </motion.h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Language */}
+          <motion.div
+            variants={itemVariants}
+            className="bg-card border border-border rounded-2xl p-6 hover:border-primary transition-all hover:shadow-lg"
+          >
+            <h3 className="text-2xl font-semibold mb-4 text-primary">💻 Languages</h3>
+            <div className="grid grid-cols-2 gap-3">
               {language.map((item: string, i: number) => (
-                <Badge
-                  className="hover:bg-primary cursor-pointer hover:text-white"
-                  variant={"secondary"}
-                  key={i + "language"}>
-                  {item}
-                </Badge>
+                <motion.div
+                  key={i + "language"}
+                  whileHover={{ scale: 1.05, x: 5 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Badge
+                    className="w-full justify-center py-2 cursor-pointer hover:bg-primary hover:text-primary-foreground transition-all"
+                    variant={"secondary"}
+                  >
+                    {item}
+                  </Badge>
+                </motion.div>
               ))}
             </div>
-          </div>
-          <div className="border-accent border-2 p-2 rounded-md">
-            <h3>Frontend</h3>
-            <div className="grid grid-cols-2 gap-2 mt-3 ">
+          </motion.div>
+
+          {/* frontend and backend */}
+          <motion.div
+            variants={itemVariants}
+            className="bg-card border border-border rounded-2xl p-6 hover:border-secondary transition-all hover:shadow-lg"
+          >
+            <h3 className="text-2xl font-semibold mb-4 text-secondary">🎨 frontend and backend</h3>
+            <div className="grid grid-cols-2 gap-3">
               {frontend.map((item: string, i: number) => (
-                <Badge
-                  className="hover:bg-primary cursor-pointer hover:text-white"
-                  variant={"secondary"}
-                  key={i + "frontend"}>
-                  {item}
-                </Badge>
+                <motion.div
+                  key={i + "frontend"}
+                  whileHover={{ scale: 1.05, x: 5 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Badge
+                    className="w-full justify-center py-2 cursor-pointer hover:bg-secondary hover:text-secondary-foreground transition-all"
+                    variant={"secondary"}
+                  >
+                    {item}
+                  </Badge>
+                </motion.div>
               ))}
             </div>
-          </div>
-          <div className="border-accent border-2 p-2 rounded-md">
-            <h3>Tools</h3>
-            <div className="grid grid-cols-2 gap-2 mt-3">
-              {tools.map((item: string, i: number) => (
-                <Badge
-                  className="hover:bg-primary cursor-pointer hover:text-white"
-                  variant={"secondary"}
-                  key={i + "tools"}>
-                  {item}
-                </Badge>
-              ))}
-            </div>
-          </div>
-          <div className="border-accent border-2 p-2 rounded-md">
-            <h3>Backend</h3>
-            <div className="grid grid-cols-2 gap-2 mt-3 ">
+          </motion.div>
+
+          {/* Backend */}
+          <motion.div
+            variants={itemVariants}
+            className="bg-card border border-border rounded-2xl p-6 hover:border-accent transition-all hover:shadow-lg"
+          >
+            <h3 className="text-2xl font-semibold mb-4 text-accent">⚙️ Backend</h3>
+            <div className="grid grid-cols-2 gap-3">
               {backend.map((item: string, i: number) => (
-                <Badge
-                  className="hover:bg-primary cursor-pointer hover:text-white"
-                  variant={"secondary"}
-                  key={i + "backend"}>
-                  {item}
-                </Badge>
+                <motion.div
+                  key={i + "backend"}
+                  whileHover={{ scale: 1.05, x: 5 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Badge
+                    className="w-full justify-center py-2 cursor-pointer hover:bg-accent hover:text-accent-foreground transition-all"
+                    variant={"secondary"}
+                  >
+                    {item}
+                  </Badge>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
+
+          {/* Tools */}
+          <motion.div
+            variants={itemVariants}
+            className="bg-card border border-border rounded-2xl p-6 hover:border-primary transition-all hover:shadow-lg"
+          >
+            <h3 className="text-2xl font-semibold mb-4 text-primary">🛠️ Tools</h3>
+            <div className="grid grid-cols-2 gap-3">
+              {tools.map((item: string, i: number) => (
+                <motion.div
+                  key={i + "tools"}
+                  whileHover={{ scale: 1.05, x: 5 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Badge
+                    className="w-full justify-center py-2 cursor-pointer hover:bg-primary hover:text-primary-foreground transition-all"
+                    variant={"secondary"}
+                  >
+                    {item}
+                  </Badge>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </div>
-      </div>
-      <div>
-        <h2 className="flex items-center gap-1 text-4xl font-bold text-primary mt-10">
-          <HiMiniBuildingOffice2 /> Experience{" "}
-          <hr className="w-full border-2 border-secondary" />
-        </h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-3">
+      </motion.div>
+
+      {/* Experience Section */}
+      <motion.div
+        ref={experienceRef}
+        initial="hidden"
+        animate={experienceInView ? "visible" : "hidden"}
+        variants={containerVariants}
+        className="space-y-8"
+      >
+        <motion.h2
+          variants={itemVariants}
+          className="flex items-center gap-3 text-4xl font-display font-bold"
+        >
+          <HiMiniBuildingOffice2 className="text-primary" />
+          <span className="gradient-text-sunset">Experience</span>
+        </motion.h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {experience.map((item: Experience, index: number) => (
-            <div
+            <motion.div
               key={index}
-              className="border-secondary border-2 rounded-md p-2">
-              <h3 className="font-semibold text-primary">{item.title}</h3>
-              <p>{item.position}</p>
-              <p>{item.years}</p>
-            </div>
+              variants={itemVariants}
+              whileHover={{ y: -5, boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
+              className="bg-card border-2 border-border rounded-2xl p-6 transition-all relative overflow-hidden group"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative z-10">
+                <h3 className="text-xl font-semibold text-primary mb-2">{item.title}</h3>
+                <p className="text-foreground font-medium">{item.position}</p>
+                <p className="text-sm text-muted-foreground mt-1">{item.years}</p>
+              </div>
+            </motion.div>
           ))}
         </div>
-      </div>
-      <div>
-        <h2 className="flex items-center gap-1 text-4xl font-bold text-primary mt-10">
-          <FaSchool /> Education{" "}
-          <hr className="w-full border-2 border-secondary" />
-        </h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-3">
+      </motion.div>
+
+      {/* Education Section */}
+      <motion.div
+        initial="hidden"
+        animate={experienceInView ? "visible" : "hidden"}
+        variants={containerVariants}
+        className="space-y-8"
+      >
+        <motion.h2
+          variants={itemVariants}
+          className="flex items-center gap-3 text-4xl font-display font-bold"
+        >
+          <FaSchool className="text-secondary" />
+          <span className="gradient-text-forest">Education</span>
+        </motion.h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {education.map((item: Education, index: number) => (
-            <div
+            <motion.div
               key={index}
-              className="border-secondary border-2 rounded-md p-2">
-              <h3 className="font-semibold text-primary">{item.name}</h3>
-              <p>{item.position}</p>
-              <p>{item.major}</p>
-              <p>{item.duration}</p>
-            </div>
+              variants={itemVariants}
+              whileHover={{ y: -5, boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
+              className="bg-card border-2 border-border rounded-2xl p-6 transition-all relative overflow-hidden group"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-secondary/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative z-10">
+                <h3 className="text-xl font-semibold text-secondary mb-2">{item.name}</h3>
+                <p className="text-foreground font-medium">{item.position}</p>
+                <p className="text-sm text-muted-foreground">{item.major}</p>
+                <p className="text-sm text-muted-foreground mt-1">{item.duration}</p>
+              </div>
+            </motion.div>
           ))}
         </div>
-      </div>
-      <div>
-        <h2 className="flex items-center gap-1 text-4xl font-bold text-primary mt-10">
-          <FaFigma /> Education{" "}
-          <hr className="w-full border-2 border-secondary" />
-        </h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-3">
+      </motion.div>
+
+      {/* Web Design Section */}
+      <motion.div
+        initial="hidden"
+        animate={experienceInView ? "visible" : "hidden"}
+        variants={containerVariants}
+        className="space-y-8"
+      >
+        <motion.h2
+          variants={itemVariants}
+          className="flex items-center gap-3 text-4xl font-display font-bold"
+        >
+          <FaFigma className="text-accent" />
+          <span className="gradient-text">Web Design</span>
+        </motion.h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {Webdesain.map((item: Education, index: number) => (
-            <div
+            <motion.div
               key={index}
-              className="border-secondary border-2 rounded-md p-2">
-              <h3 className="font-semibold text-primary">{item.name}</h3>
-              <p>{item.position}</p>
-              <p>{item.major}</p>
-              <p>{item.duration}</p>
-            </div>
+              variants={itemVariants}
+              whileHover={{ y: -5, boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
+              className="bg-card border-2 border-border rounded-2xl p-6 transition-all relative overflow-hidden group"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative z-10">
+                <h3 className="text-xl font-semibold text-accent mb-2">{item.name}</h3>
+                <p className="text-foreground font-medium">{item.position}</p>
+                <p className="text-sm text-muted-foreground">{item.major}</p>
+                <p className="text-sm text-muted-foreground mt-1">{item.duration}</p>
+              </div>
+            </motion.div>
           ))}
         </div>
-      </div>
- 
+      </motion.div>
     </div>
   );
 };
@@ -173,40 +317,40 @@ type Education = {
   duration: string;
 };
 
-const language = ["Html & Css", "JavaScript", "PHP", "TypeScript", "C#"];
+const language = ["Html & Css", "JavaScript", "PHP", "React", "Next", "TypeScript", "C#"];
 
 const frontend = [
   "React.JS",
   "Next.JS",
   "Tailwind CSS",
+  "Bootstrap",
   "Figma",
   "Canva",
   "ShadCn",
-  "Bootstrap 5",
 ];
+
 const tools = [
   "Figma",
   "Canva",
   "Git",
   "VS Code",
-  "It",
   "Docker",
   "Vercel",
-  "overflow",
-  "ChatGpt 4.1",
+  "ChatGPT 4.1",
   "Nginx",
 ];
-const backend = ["Laravel", "MySQL"];
+
+const backend = ["React", "NextJS", "Supabase"];
 
 const experience = [
   {
     title: "PT HUMMA TEKNOLOGI INDONESIA",
-    position: "Frontend",
+    position: "Frontend Developer",
     years: "2023-Present",
   },
   {
     title: "UI School (Self-Taught)",
-    position: "Frontend Developer,Backend",
+    position: "Frontend Developer, Backend",
     years: "2024-Present",
   },
 ];
@@ -214,24 +358,25 @@ const experience = [
 const education = [
   {
     name: "SMK Al Azhar",
-    position: "Vocational High School",
+    position: "FrontEnd | Backend",
     major: "Rekayasa Perangkat Lunak",
     duration: "2020-2023",
   },
   {
-    name: "UI School (Self-Taught)",
-    position: "UI Programming",
-    major: "UI Development",
-    duration: "2023-Present",
+    name: "SMK",
+    position: "FrontEnd | Backend",
+    major: "Rekayasa Perangkat Lunak",
+    duration: "2020-2023",
   },
 ];
+
 const Webdesain = [
   {
     name: "UI UX",
     position: "Figma Designer",
-    major: "Canvas",
+    major: "Canvas | Lovart Ai ",
     duration: "2023-Present",
   },
 ];
 
-export default page;
+export default AboutPage;
