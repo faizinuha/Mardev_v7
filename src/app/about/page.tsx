@@ -49,12 +49,12 @@ const AboutPage = (props: Props) => {
             <p>
               Hi, I'm <span className="text-primary font-semibold">Abdul Rozak</span>, a frontend and backend Developer with a basic
               understanding of Backend, Web Designer (Figma, Canva), and a
-              self-taught UI Programmer from Indoneia/Japan. I am passionate about
+              self-taught UI Programmer from Indonesia/Japan. I am passionate about
               creating intuitive user interfaces and developing functional web
               applications.
             </p>
             <p>
-              I enjoy working with both frontend and backend and backend technologies, and
+              I enjoy working with both frontend and backend technologies, and
               I'm constantly improving my skills. My learning journey has been
               shaped by hands-on experience and the pursuit of knowledge through
               online resources and personal projects.
@@ -127,7 +127,7 @@ const AboutPage = (props: Props) => {
             variants={itemVariants}
             className="bg-card border border-border rounded-2xl p-6 hover:border-secondary transition-all hover:shadow-lg"
           >
-            <h3 className="text-2xl font-semibold mb-4 text-secondary">🎨 frontend and backend</h3>
+            <h3 className="text-2xl font-semibold mb-4 text-secondary">🎨 Frontend</h3>
             <div className="grid grid-cols-2 gap-3">
               {frontend.map((item: string, i: number) => (
                 <motion.div
@@ -340,7 +340,7 @@ const tools = [
   "Nginx",
 ];
 
-const backend = ["React", "NextJS", "Supabase"];
+const backend = ["Node.js", "Express", "Supabase", "MySQL", "PostgreSQL", "MongoDB"];
 
 const experience = [
   {
@@ -362,19 +362,13 @@ const education = [
     major: "Rekayasa Perangkat Lunak",
     duration: "2020-2023",
   },
-  {
-    name: "SMK",
-    position: "FrontEnd | Backend",
-    major: "Rekayasa Perangkat Lunak",
-    duration: "2020-2023",
-  },
 ];
 
 const Webdesain = [
   {
     name: "UI UX",
     position: "Figma Designer",
-    major: "Canvas | Lovart Ai ",
+    major: "Canva | Lovart AI",
     duration: "2023-Present",
   },
 ];
