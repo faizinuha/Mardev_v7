@@ -75,7 +75,7 @@ const AboutPage = (props: Props) => {
         >
           <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur-2xl opacity-30" />
           <Image
-            src={"/images/news.jpeg"}
+            src={"/images/Avatar.png"}
             alt="Abdul Rozak"
             loading="lazy"
             width={1000}
