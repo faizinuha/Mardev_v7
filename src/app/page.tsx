@@ -103,7 +103,7 @@ export default function Home() {
       y: 0,
       opacity: 1,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 100,
         damping: 10
       }
@@ -116,7 +116,7 @@ export default function Home() {
       scale: 1,
       opacity: 1,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 100,
         damping: 15
       }
@@ -233,7 +233,7 @@ export default function Home() {
                   key={i}
                   whileHover={{ scale: 1.1, y: -5 }}
                   whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  transition={{ type: "spring" as const, stiffness: 400, damping: 10 }}
                 >
                   <SosmedLink icon={item.icon} url={item.url} />
                 </motion.div>

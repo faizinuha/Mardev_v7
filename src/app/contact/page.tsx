@@ -51,7 +51,7 @@ const ContactPage = () => {
     visible: {
       y: 0,
       opacity: 1,
-      transition: { type: "spring", stiffness: 100 }
+      transition: { type: "spring" as const, stiffness: 100 }
     }
   };
 
@@ -146,7 +146,7 @@ const ContactPage = () => {
           <motion.div variants={itemVariants}>
             <div className="bg-card border border-border rounded-2xl p-8 shadow-lg">
               <h2 className="text-2xl font-semibold mb-6 gradient-text-ocean">Send a Message</h2>
-              
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Name */}
                 <div className="relative">
@@ -244,7 +244,7 @@ const ContactPage = () => {
             {/* Contact Details */}
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold gradient-text-sunset">Contact Information</h2>
-              
+
               {contactInfo.map((info, index) => (
                 <motion.div
                   key={index}
@@ -269,7 +269,7 @@ const ContactPage = () => {
             {/* Social Links */}
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold gradient-text-forest">Connect With Me</h2>
-              
+
               <div className="flex gap-4">
                 {socialLinks.map((social, index) => (
                   <motion.a

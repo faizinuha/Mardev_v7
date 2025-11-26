@@ -40,18 +40,18 @@ const ProjectsPage = () => {
   const filteredProjects = useMemo(() => {
     return projects.filter(project => {
       const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          project.description.toLowerCase().includes(searchQuery.toLowerCase());
+        project.description.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = selectedCategory === "All" || project.category.includes(selectedCategory);
-      const matchesTech = selectedTech.length === 0 || 
-                         selectedTech.some(tech => project.tech.includes(tech));
-      
+      const matchesTech = selectedTech.length === 0 ||
+        selectedTech.some(tech => project.tech.includes(tech));
+
       return matchesSearch && matchesCategory && matchesTech;
     });
   }, [searchQuery, selectedCategory, selectedTech]);
 
   const toggleTech = (tech: string) => {
-    setSelectedTech(prev => 
-      prev.includes(tech) 
+    setSelectedTech(prev =>
+      prev.includes(tech)
         ? prev.filter(t => t !== tech)
         : [...prev, tech]
     );
@@ -74,7 +74,7 @@ const ProjectsPage = () => {
       y: 0,
       opacity: 1,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 100
       }
     }
@@ -83,7 +83,7 @@ const ProjectsPage = () => {
   return (
     <div className="min-h-screen py-10 px-5 lg:px-10">
       {/* Hero Section */}
-      <motion.div 
+      <motion.div
         className="text-center mb-12"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -98,7 +98,7 @@ const ProjectsPage = () => {
       </motion.div>
 
       {/* Search and Filter Section */}
-      <motion.div 
+      <motion.div
         className="mb-10 space-y-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -163,7 +163,7 @@ const ProjectsPage = () => {
 
         {/* Active Filters Display */}
         {(selectedCategory !== "All" || selectedTech.length > 0) && (
-          <motion.div 
+          <motion.div
             className="flex flex-wrap gap-2 justify-center items-center"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
@@ -184,7 +184,7 @@ const ProjectsPage = () => {
       </motion.div>
 
       {/* Projects Count */}
-      <motion.p 
+      <motion.p
         className="text-center text-muted-foreground mb-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -193,7 +193,7 @@ const ProjectsPage = () => {
       </motion.p>
 
       {/* Projects Grid */}
-      <motion.div 
+      <motion.div
         ref={ref}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         variants={containerVariants}
@@ -228,7 +228,7 @@ const ProjectsPage = () => {
                 <h2 className="text-2xl font-semibold text-foreground group-hover:text-primary transition-colors">
                   {item.title}
                 </h2>
-                
+
                 <p className="text-sm text-muted-foreground line-clamp-3">
                   {item.description}
                 </p>
