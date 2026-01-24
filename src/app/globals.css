@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,78 +6,80 @@
 
 @layer base {
   :root {
-    /* Modern Color Palette - Light Mode */
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
+    /* Japanese Minimalist - Sakura Theme Light Mode */
+    --background: 30 30% 98%;
+    --foreground: 0 0% 15%;
     
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card: 30 25% 97%;
+    --card-foreground: 0 0% 15%;
     
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover: 30 25% 97%;
+    --popover-foreground: 0 0% 15%;
     
-    --primary: 250 84% 54%;        /* Vibrant Blue #4F46E5 */
-    --primary-foreground: 0 0% 100%;
+    --primary: 350 60% 75%;
+    --primary-foreground: 0 0% 15%;
     
-    --secondary: 270 91% 65%;      /* Purple #A855F7 */
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 350 45% 85%;
+    --secondary-foreground: 0 0% 25%;
     
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 30 15% 94%;
+    --muted-foreground: 0 0% 45%;
     
-    --accent: 340 82% 52%;         /* Pink/Rose #EC4899 */
+    --accent: 350 50% 70%;
     --accent-foreground: 0 0% 100%;
     
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
     
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 250 84% 54%;
+    --border: 30 15% 88%;
+    --input: 30 15% 88%;
+    --ring: 350 60% 75%;
     
-    --radius: 0.75rem;
+    --radius: 0.5rem;
     
-    --chart-1: 142 76% 36%;
-    --chart-2: 250 84% 54%;
-    --chart-3: 340 82% 52%;
-    --chart-4: 38 92% 50%;
-    --chart-5: 270 91% 65%;
-
-    /* Font Variables */
-    --font-inter: 'Inter', system-ui, sans-serif;
-    --font-display: 'DM Sans', system-ui, sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
+    /* Japanese Accent Colors */
+    --sakura: 350 60% 80%;
+    --sakura-dark: 350 55% 65%;
+    --washi: 40 20% 95%;
+    --sumi: 0 0% 20%;
+    --ume: 330 50% 70%;
   }
 
   .dark {
-    /* Modern Color Palette - Dark Mode */
-    --background: 222 47% 11%;     /* Deep Dark #0F172A */
-    --foreground: 210 40% 98%;
+    /* Japanese Minimalist - Dark Mode */
+    --background: 220 15% 8%;
+    --foreground: 30 20% 92%;
     
-    --card: 217 33% 17%;           /* Card Background #1E293B */
-    --card-foreground: 210 40% 98%;
+    --card: 220 12% 12%;
+    --card-foreground: 30 20% 92%;
     
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 12% 12%;
+    --popover-foreground: 30 20% 92%;
     
-    --primary: 250 84% 54%;        /* Vibrant Blue */
-    --primary-foreground: 0 0% 100%;
+    --primary: 350 55% 70%;
+    --primary-foreground: 220 15% 8%;
     
-    --secondary: 270 91% 65%;      /* Purple */
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 350 40% 25%;
+    --secondary-foreground: 350 55% 85%;
     
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 220 10% 18%;
+    --muted-foreground: 30 10% 60%;
     
-    --accent: 340 82% 52%;         /* Pink/Rose */
+    --accent: 350 50% 65%;
     --accent-foreground: 0 0% 100%;
     
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
     
-    --border: 217 19% 27%;         /* Borders #334155 */
-    --input: 217 19% 27%;
-    --ring: 250 84% 54%;
+    --border: 220 10% 20%;
+    --input: 220 10% 20%;
+    --ring: 350 55% 70%;
+    
+    --sakura: 350 50% 65%;
+    --sakura-dark: 350 45% 50%;
+    --washi: 220 10% 15%;
+    --sumi: 30 15% 85%;
+    --ume: 330 45% 60%;
   }
 }
 
@@ -87,165 +89,156 @@
   }
   
   body {
-    @apply bg-background text-foreground font-sans;
-    font-feature-settings: 'rlig' 1, 'calt' 1;
+    @apply bg-background text-foreground;
+    font-family: 'Noto Sans JP', 'Zen Kaku Gothic New', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-bold;
-  }
-
-  code {
-    @apply font-mono;
+    font-family: 'Zen Kaku Gothic New', 'Noto Sans JP', system-ui, sans-serif;
+    @apply font-bold;
   }
 }
 
 @layer utilities {
-  /* Glassmorphism Effect */
-  .glass {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+  /* Japanese Glass Effect - Shoji Screen */
+  .glass-shoji {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
   }
 
-  .glass-dark {
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  .dark .glass-shoji {
+    background: rgba(20, 20, 25, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
-  /* Gradient Text */
-  .gradient-text {
+  /* Sakura Gradient Text */
+  .text-sakura-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-image: linear-gradient(135deg, hsl(350, 60%, 75%) 0%, hsl(330, 50%, 70%) 100%);
   }
 
-  .gradient-text-sunset {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  /* Soft Shadow - Japanese Style */
+  .shadow-soft {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   }
 
-  .gradient-text-ocean {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  .dark .shadow-soft {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 
-  .gradient-text-forest {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  /* Sakura Petal Animation */
+  @keyframes float-petal {
+    0%, 100% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 0.8;
+    }
+    50% {
+      transform: translateY(-15px) rotate(180deg);
+      opacity: 1;
+    }
   }
 
-  /* Animated Gradient Background */
-  .animated-gradient {
-    background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
+  .animate-petal {
+    animation: float-petal 6s ease-in-out infinite;
   }
 
-  /* Glow Effects */
-  .glow-primary {
-    box-shadow: 0 0 20px rgba(79, 70, 229, 0.5);
+  /* Fade In Animation */
+  @keyframes fade-in-up {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
-  .glow-secondary {
-    box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
   }
 
-  .glow-accent {
-    box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
-  }
-
-  /* Smooth Transitions */
-  .transition-smooth {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Custom Scrollbar */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-track {
-    @apply bg-muted;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-primary rounded-full;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    @apply bg-primary/80;
-  }
-
-  /* Blinking Cursor for Typing Effect */
-  .blinking-cursor {
-    animation: blink 0.8s infinite;
-  }
-
-  @keyframes blink {
-    0%, 100% { opacity: 0; }
-    50% { opacity: 1; }
-  }
-
-  /* Shimmer Effect */
-  .shimmer {
-    background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.2) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    background-size: 200% 100%;
-    animation: shimmer 2s linear infinite;
-  }
-
-  /* Hover Lift Effect */
-  .hover-lift {
-    @apply transition-smooth;
-  }
-
-  .hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  }
-
-  /* Card Hover Effect */
+  /* Hover Card Effect */
   .card-hover {
-    @apply transition-smooth;
+    @apply transition-all duration-300;
   }
 
   .card-hover:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  .dark .card-hover:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Underline Animation */
+  .underline-animate {
+    position: relative;
+  }
+
+  .underline-animate::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: hsl(var(--primary));
+    transition: width 0.3s ease;
+  }
+
+  .underline-animate:hover::after {
+    width: 100%;
   }
 }
 
-/* Remove default focus outline and add custom */
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection Color */
+::selection {
+  background: hsl(350, 60%, 85%);
+  color: hsl(0, 0%, 15%);
+}
+
+::-moz-selection {
+  background: hsl(350, 60%, 85%);
+  color: hsl(0, 0%, 15%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(350, 55%, 65%);
+}
+
+/* Focus States */
 *:focus {
   outline: none;
 }
 
 *:focus-visible {
   @apply ring-2 ring-primary ring-offset-2 ring-offset-background;
-}
-
-/* Selection Color */
-::selection {
-  @apply bg-primary/20 text-primary;
-}
-
-::-moz-selection {
-  @apply bg-primary/20 text-primary;
-}
-
-/* Smooth Scroll */
-html {
-  scroll-behavior: smooth;
 }
 
 /* Reduce Motion for Accessibility */

@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { FaEnvelope, FaGithub, FaInstagram, FaLinkedin, FaMapMarkerAlt } from "react-icons/fa";
+import { FaEnvelope, FaGithub, FaLinkedin, FaMapMarkerAlt } from "react-icons/fa";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -12,305 +12,205 @@ const ContactPage = () => {
     subject: "",
     message: "",
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    toast.success("Message sent successfully! I'll get back to you soon.", {
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    toast.success("Pesan terkirim! Saya akan segera membalas.", {
       duration: 4000,
       position: "top-center",
     });
-
     setFormData({ name: "", email: "", subject: "", message: "" });
     setIsSubmitting(false);
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: "spring" as const, stiffness: 100 }
-    }
-  };
-
   const contactInfo = [
-    {
-      icon: <FaEnvelope className="text-2xl" />,
-      label: "Email",
-      value: "John@example.com",
-      link: "mailto:John@example.com"
-    },
-    {
-      icon: <FaMapMarkerAlt className="text-2xl" />,
-      label: "Location",
-      value: "Jakarta, Indonesia",
-      link: null
-    },
+    { icon: <FaEnvelope className="text-xl" />, label: "Email", value: "zaki@example.com", link: "mailto:zaki@example.com" },
+    { icon: <FaMapMarkerAlt className="text-xl" />, label: "Lokasi", value: "Indonesia", link: null },
   ];
 
   const socialLinks = [
-    {
-      icon: <FaGithub className="text-2xl" />,
-      label: "GitHub",
-      url: "#",
-      color: "hover:text-gray-600"
-    },
-    {
-      icon: <FaLinkedin className="text-2xl" />,
-      label: "LinkedIn",
-      url: "#",
-      color: "hover:text-blue-600"
-    },
-    {
-      icon: <FaInstagram className="text-2xl" />,
-      label: "Instagram",
-      url: "#",
-      color: "hover:text-pink-600"
-    },
+    { icon: <FaGithub className="text-xl" />, label: "GitHub", url: "https://github.com/faizinuha" },
+    { icon: <FaLinkedin className="text-xl" />, label: "LinkedIn", url: "#" },
   ];
 
   return (
-    <div className="min-h-screen py-10 px-5 lg:px-20 relative overflow-hidden">
+    <div className="min-h-screen py-10 max-w-5xl mx-auto">
       <Toaster />
 
-      {/* Background Decorations */}
-      <div className="absolute inset-0 z-0">
-        <motion.div
-          className="absolute top-20 right-0 w-96 h-96 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full blur-3xl opacity-10"
-          animate={{
-            scale: [1, 1.2],
-            rotate: [0, 360],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-            repeatType: "reverse"
-          }}
-        />
-        <motion.div
-          className="absolute bottom-20 left-0 w-96 h-96 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full blur-3xl opacity-10"
-          animate={{
-            scale: [1, 1.3],
-            rotate: [0, -360],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "linear",
-            repeatType: "reverse"
-          }}
-        />
-      </div>
-
+      {/* Header */}
       <motion.div
-        className="relative z-10 max-w-6xl mx-auto"
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
+        className="text-center mb-12"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
       >
-        {/* Header */}
-        <motion.div variants={itemVariants} className="text-center mb-16">
-          <h1 className="text-5xl lg:text-6xl font-display font-extrabold mb-4">
-            <span className="gradient-text">Get In Touch</span>
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Have a project in mind or just want to say hi? Feel free to reach out!
-          </p>
+        <h1 className="text-4xl lg:text-5xl font-bold mb-3">
+          <span className="text-sakura-gradient">Contact</span>
+        </h1>
+        <p className="text-muted-foreground">Tertarik untuk bekerja sama? Hubungi saya!</p>
+      </motion.div>
+
+      <div className="grid lg:grid-cols-2 gap-10">
+        {/* Form */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <div className="bg-card border border-border rounded-xl p-6 shadow-soft" data-testid="contact-form">
+            <h2 className="text-xl font-semibold mb-5 text-sakura-gradient">Kirim Pesan</h2>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <label className="block text-sm text-muted-foreground mb-1.5">Nama</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  data-testid="input-name"
+                  className="w-full px-4 py-2.5 border border-border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                  placeholder="Nama Anda"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm text-muted-foreground mb-1.5">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  data-testid="input-email"
+                  className="w-full px-4 py-2.5 border border-border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                  placeholder="email@example.com"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm text-muted-foreground mb-1.5">Subject</label>
+                <select
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  required
+                  data-testid="input-subject"
+                  className="w-full px-4 py-2.5 border border-border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                >
+                  <option value="">Pilih subject</option>
+                  <option value="project">Project Inquiry</option>
+                  <option value="collaboration">Kolaborasi</option>
+                  <option value="job">Job Opportunity</option>
+                  <option value="other">Lainnya</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm text-muted-foreground mb-1.5">Pesan</label>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  rows={4}
+                  maxLength={500}
+                  data-testid="input-message"
+                  className="w-full px-4 py-2.5 border border-border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all resize-none"
+                  placeholder="Tulis pesan Anda..."
+                />
+                <p className="text-xs text-muted-foreground mt-1 text-right">{formData.message.length}/500</p>
+              </div>
+
+              <motion.button
+                type="submit"
+                disabled={isSubmitting}
+                data-testid="submit-btn"
+                className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+              >
+                {isSubmitting ? "Mengirim..." : "Kirim Pesan"}
+              </motion.button>
+            </form>
+          </div>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <motion.div variants={itemVariants}>
-            <div className="bg-card border border-border rounded-2xl p-8 shadow-lg">
-              <h2 className="text-2xl font-semibold mb-6 gradient-text-ocean">Send a Message</h2>
-
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Name */}
-                <div className="relative">
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="peer w-full px-4 py-3 border border-border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder-transparent"
-                    placeholder="Your Name"
-                  />
-                  <label className="absolute left-4 -top-2.5 bg-card px-2 text-sm text-muted-foreground peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-placeholder-shown:text-muted-foreground peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-primary transition-all">
-                    Your Name
-                  </label>
+        {/* Contact Info */}
+        <motion.div
+          className="space-y-6"
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          {/* Info Cards */}
+          <div className="space-y-3">
+            <h2 className="text-xl font-semibold text-sakura-gradient">Info Kontak</h2>
+            {contactInfo.map((info, i) => (
+              <motion.div
+                key={i}
+                className="flex items-center gap-4 p-4 bg-card border border-border rounded-lg card-hover"
+                whileHover={{ x: 5 }}
+              >
+                <div className="text-primary">{info.icon}</div>
+                <div>
+                  <p className="text-xs text-muted-foreground">{info.label}</p>
+                  {info.link ? (
+                    <a href={info.link} className="text-sm font-medium hover:text-primary transition-colors">
+                      {info.value}
+                    </a>
+                  ) : (
+                    <p className="text-sm font-medium">{info.value}</p>
+                  )}
                 </div>
+              </motion.div>
+            ))}
+          </div>
 
-                {/* Email */}
-                <div className="relative">
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="peer w-full px-4 py-3 border border-border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder-transparent"
-                    placeholder="Your Email"
-                  />
-                  <label className="absolute left-4 -top-2.5 bg-card px-2 text-sm text-muted-foreground peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-placeholder-shown:text-muted-foreground peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-primary transition-all">
-                    Your Email
-                  </label>
-                </div>
-
-                {/* Subject */}
-                <div className="relative">
-                  <select
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                  >
-                    <option value="">Select a subject</option>
-                    <option value="project">Project Inquiry</option>
-                    <option value="collaboration">Collaboration</option>
-                    <option value="job">Job Opportunity</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-
-                {/* Message */}
-                <div className="relative">
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={5}
-                    maxLength={500}
-                    className="peer w-full px-4 py-3 border border-border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder-transparent resize-none"
-                    placeholder="Your Message"
-                  />
-                  <label className="absolute left-4 -top-2.5 bg-card px-2 text-sm text-muted-foreground peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-placeholder-shown:text-muted-foreground peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-primary transition-all">
-                    Your Message
-                  </label>
-                  <div className="text-xs text-muted-foreground mt-1 text-right">
-                    {formData.message.length} / 500
-                  </div>
-                </div>
-
-                {/* Submit Button */}
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-semibold hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+          {/* Social Links */}
+          <div className="space-y-3">
+            <h2 className="text-xl font-semibold text-sakura-gradient">Social Media</h2>
+            <div className="flex gap-3">
+              {socialLinks.map((social, i) => (
+                <motion.a
+                  key={i}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid={`social-${social.label.toLowerCase()}`}
+                  className="p-4 bg-card border border-border rounded-lg hover:border-primary hover:text-primary transition-all"
+                  whileHover={{ y: -3 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <span className="relative z-10">
-                    {isSubmitting ? "Sending..." : "Send Message"}
-                  </span>
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600"
-                    initial={{ x: "-100%" }}
-                    whileHover={{ x: 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.button>
-              </form>
-            </div>
-          </motion.div>
-
-          {/* Contact Info */}
-          <motion.div variants={itemVariants} className="space-y-8">
-            {/* Contact Details */}
-            <div className="space-y-4">
-              <h2 className="text-2xl font-semibold gradient-text-sunset">Contact Information</h2>
-
-              {contactInfo.map((info, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ x: 5 }}
-                  className="flex items-center gap-4 p-4 bg-card border border-border rounded-lg hover:border-primary transition-all"
-                >
-                  <div className="text-primary">{info.icon}</div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">{info.label}</p>
-                    {info.link ? (
-                      <a href={info.link} className="text-foreground font-medium hover:text-primary transition-colors">
-                        {info.value}
-                      </a>
-                    ) : (
-                      <p className="text-foreground font-medium">{info.value}</p>
-                    )}
-                  </div>
-                </motion.div>
+                  {social.icon}
+                </motion.a>
               ))}
             </div>
+          </div>
 
-            {/* Social Links */}
-            <div className="space-y-4">
-              <h2 className="text-2xl font-semibold gradient-text-forest">Connect With Me</h2>
-
-              <div className="flex gap-4">
-                {socialLinks.map((social, index) => (
-                  <motion.a
-                    key={index}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`p-4 bg-card border border-border rounded-lg ${social.color} transition-all`}
-                    whileHover={{ y: -5, scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {social.icon}
-                  </motion.a>
-                ))}
-              </div>
+          {/* Availability */}
+          <motion.div
+            className="bg-green-500/10 border border-green-500/30 rounded-lg p-5"
+            whileHover={{ scale: 1.01 }}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse" />
+              <h3 className="font-semibold text-green-600 dark:text-green-400">Open for Work</h3>
             </div>
-
-            {/* Availability Status */}
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30 rounded-lg p-6"
-            >
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                <h3 className="text-lg font-semibold text-green-600 dark:text-green-400">Available for Work</h3>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                I'm currently open to new opportunities and collaborations. Let's build something amazing together!
-              </p>
-            </motion.div>
-
-            {/* Response Time */}
-            <div className="bg-card border border-border rounded-lg p-6">
-              <h3 className="text-lg font-semibold mb-2">⏱️ Response Time</h3>
-              <p className="text-sm text-muted-foreground">
-                I typically respond within 24-48 hours during weekdays.
-              </p>
-            </div>
+            <p className="text-sm text-muted-foreground">
+              Saya terbuka untuk project baru dan kolaborasi.
+            </p>
           </motion.div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   );
 };

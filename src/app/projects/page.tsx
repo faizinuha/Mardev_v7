@@ -4,270 +4,177 @@ import { Badge } from "@/components/ui/badge";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { FaGithub, FaSearch } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
+import { HiSearch } from "react-icons/hi";
 import { useInView } from "react-intersection-observer";
 import Swal from "sweetalert2";
-
-type Props = {};
 
 const ProjectsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedTech, setSelectedTech] = useState<string[]>([]);
 
-  const { ref, inView } = useInView({
-    threshold: 0.1,
-    triggerOnce: true,
-  });
+  const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
 
   const handleClick = (url: string) => {
     if (!url) {
       Swal.fire({
         icon: "info",
-        title: "No Link Available",
-        text: "Sorry, this project doesn't have a link yet.",
+        title: "Link Belum Tersedia",
+        text: "Maaf, project ini belum memiliki link.",
+        confirmButtonColor: "hsl(350, 60%, 75%)",
       });
     } else {
       window.open(url, "_blank");
     }
   };
 
-  // Get unique categories and tech
   const categories = ["All", ...Array.from(new Set(projects.flatMap(p => p.category)))];
-  const allTech = Array.from(new Set(projects.flatMap(p => p.tech)));
 
-  // Filter projects
   const filteredProjects = useMemo(() => {
     return projects.filter(project => {
       const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.description.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = selectedCategory === "All" || project.category.includes(selectedCategory);
-      const matchesTech = selectedTech.length === 0 ||
-        selectedTech.some(tech => project.tech.includes(tech));
-
-      return matchesSearch && matchesCategory && matchesTech;
+      return matchesSearch && matchesCategory;
     });
-  }, [searchQuery, selectedCategory, selectedTech]);
-
-  const toggleTech = (tech: string) => {
-    setSelectedTech(prev =>
-      prev.includes(tech)
-        ? prev.filter(t => t !== tech)
-        : [...prev, tech]
-    );
-  };
-
-  // Animation Variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 100
-      }
-    }
-  };
+  }, [searchQuery, selectedCategory]);
 
   return (
-    <div className="min-h-screen py-10 px-5 lg:px-10">
-      {/* Hero Section */}
+    <div className="min-h-screen py-10 max-w-6xl mx-auto">
+      {/* Header */}
       <motion.div
-        className="text-center mb-12"
+        className="text-center mb-10"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.5 }}
       >
-        <h1 className="text-5xl lg:text-6xl font-display font-extrabold mb-4">
-          <span className="gradient-text">Latest Projects</span>
+        <h1 className="text-4xl lg:text-5xl font-bold mb-3">
+          <span className="text-sakura-gradient">Projects</span>
         </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Some code and bugs I've made trying to put my dent in the universe.
-        </p>
+        <p className="text-muted-foreground">Beberapa project yang sudah saya kerjakan</p>
       </motion.div>
 
-      {/* Search and Filter Section */}
+      {/* Search & Filter */}
       <motion.div
-        className="mb-10 space-y-6"
+        className="mb-8 space-y-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.6 }}
+        transition={{ delay: 0.2 }}
       >
-        {/* Search Bar */}
-        <div className="relative max-w-2xl mx-auto">
-          <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
+        {/* Search */}
+        <div className="relative max-w-md mx-auto">
+          <HiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
           <input
             type="text"
-            placeholder="Search projects..."
+            placeholder="Cari project..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 rounded-full border border-border bg-card focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none"
+            data-testid="search-input"
+            className="w-full pl-11 pr-4 py-3 rounded-lg border border-border bg-card focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
           />
         </div>
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap gap-3 justify-center">
+        {/* Categories */}
+        <div className="flex flex-wrap gap-2 justify-center">
           {categories.map((category) => (
             <motion.button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`
-                px-6 py-2 rounded-full font-medium transition-all
-                ${selectedCategory === category
-                  ? 'bg-primary text-primary-foreground shadow-lg'
+              data-testid={`category-${category.toLowerCase()}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                selectedCategory === category
+                  ? 'bg-primary text-primary-foreground'
                   : 'bg-card border border-border hover:border-primary'
-                }
-              `}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              }`}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
               {category}
             </motion.button>
           ))}
         </div>
-
-        {/* Tech Filter */}
-        <div className="max-w-4xl mx-auto">
-          <p className="text-sm text-muted-foreground mb-3 text-center">Filter by Technology:</p>
-          <div className="flex flex-wrap gap-2 justify-center">
-            {allTech.map((tech) => (
-              <motion.button
-                key={tech}
-                onClick={() => toggleTech(tech)}
-                className={`
-                  px-4 py-1.5 rounded-full text-sm font-medium transition-all
-                  ${selectedTech.includes(tech)
-                    ? 'bg-secondary text-secondary-foreground'
-                    : 'bg-card border border-border hover:border-secondary'
-                  }
-                `}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {tech}
-              </motion.button>
-            ))}
-          </div>
-        </div>
-
-        {/* Active Filters Display */}
-        {(selectedCategory !== "All" || selectedTech.length > 0) && (
-          <motion.div
-            className="flex flex-wrap gap-2 justify-center items-center"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-          >
-            <span className="text-sm text-muted-foreground">Active filters:</span>
-            {selectedCategory !== "All" && (
-              <Badge variant="secondary" className="cursor-pointer" onClick={() => setSelectedCategory("All")}>
-                {selectedCategory} ✕
-              </Badge>
-            )}
-            {selectedTech.map(tech => (
-              <Badge key={tech} variant="secondary" className="cursor-pointer" onClick={() => toggleTech(tech)}>
-                {tech} ✕
-              </Badge>
-            ))}
-          </motion.div>
-        )}
       </motion.div>
 
       {/* Projects Count */}
-      <motion.p
-        className="text-center text-muted-foreground mb-6"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-      >
-        Showing {filteredProjects.length} of {projects.length} projects
-      </motion.p>
+      <p className="text-center text-sm text-muted-foreground mb-6">
+        Menampilkan {filteredProjects.length} dari {projects.length} project
+      </p>
 
       {/* Projects Grid */}
       <motion.div
         ref={ref}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        variants={containerVariants}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
+        variants={{
+          hidden: { opacity: 0 },
+          visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+        }}
       >
         <AnimatePresence mode="popLayout">
-          {filteredProjects.map((item: Projects, index: number) => (
+          {filteredProjects.map((item, index) => (
             <motion.div
               key={item.title}
               layout
-              variants={itemVariants}
-              exit={{ opacity: 0, scale: 0.8 }}
-              whileHover={{ y: -10 }}
-              className="group bg-card border border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
+              variants={{
+                hidden: { y: 20, opacity: 0 },
+                visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100 } }
+              }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="group bg-card border border-border rounded-xl overflow-hidden card-hover"
+              data-testid={`project-card-${index}`}
             >
-              {/* Project Image */}
-              <div className="relative h-48 overflow-hidden">
+              {/* Image */}
+              <div className="relative h-40 overflow-hidden">
                 <Image
                   src={item.img}
-                  width={1000}
-                  height={1000}
+                  width={400}
+                  height={200}
                   alt={item.title}
-                  className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+                  className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
 
-              {/* Project Content */}
-              <div className="p-6 space-y-4">
-                <h2 className="text-2xl font-semibold text-foreground group-hover:text-primary transition-colors">
+              {/* Content */}
+              <div className="p-5 space-y-3">
+                <h2 className="text-lg font-semibold group-hover:text-primary transition-colors">
                   {item.title}
                 </h2>
 
-                <p className="text-sm text-muted-foreground line-clamp-3">
+                <p className="text-sm text-muted-foreground line-clamp-2">
                   {item.description}
                 </p>
 
-                {/* Tech Stack */}
-                <div className="flex flex-wrap gap-2">
-                  {item.tech.map((techItem: string, techIndex: number) => (
-                    <Badge
-                      key={techIndex}
-                      variant="secondary"
-                      className="text-xs"
-                    >
-                      {techItem}
+                {/* Tech */}
+                <div className="flex flex-wrap gap-1.5">
+                  {item.tech.slice(0, 4).map((tech, i) => (
+                    <Badge key={i} variant="secondary" className="text-xs">
+                      {tech}
                     </Badge>
                   ))}
                 </div>
 
                 {/* Category */}
-                <div className="flex flex-wrap gap-2">
-                  {item.category.map((categoryItem: string, categoryIndex: number) => (
-                    <Badge
-                      key={categoryIndex}
-                      className="text-xs bg-primary/10 text-primary hover:bg-primary/20"
-                    >
-                      {categoryItem}
+                <div className="flex flex-wrap gap-1.5">
+                  {item.category.map((cat, i) => (
+                    <Badge key={i} className="text-xs bg-primary/10 text-primary hover:bg-primary/20">
+                      {cat}
                     </Badge>
                   ))}
                 </div>
 
-                {/* GitHub Link */}
+                {/* GitHub */}
                 {item.url && (
                   <motion.button
                     onClick={() => handleClick(item.url)}
-                    className="w-full flex items-center justify-center gap-2 bg-foreground text-background px-4 py-2.5 rounded-full font-medium hover:bg-foreground/90 transition-all"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    data-testid={`github-btn-${index}`}
+                    className="w-full flex items-center justify-center gap-2 bg-foreground text-background py-2.5 rounded-lg font-medium hover:opacity-90 transition-opacity"
+                    whileHover={{ scale: 1.01 }}
+                    whileTap={{ scale: 0.99 }}
                   >
-                    <FaGithub className="text-lg" />
-                    <span>View on GitHub</span>
+                    <FaGithub />
+                    <span>GitHub</span>
                   </motion.button>
                 )}
               </div>
@@ -279,19 +186,18 @@ const ProjectsPage = () => {
       {/* No Results */}
       {filteredProjects.length === 0 && (
         <motion.div
-          className="text-center py-20"
+          className="text-center py-16"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          <p className="text-2xl text-muted-foreground">No projects found</p>
-          <p className="text-sm text-muted-foreground mt-2">Try adjusting your filters</p>
+          <p className="text-xl text-muted-foreground">Project tidak ditemukan</p>
         </motion.div>
       )}
     </div>
   );
 };
 
-type Projects = {
+type Project = {
   title: string;
   img: string;
   description: string;
@@ -300,57 +206,46 @@ type Projects = {
   category: string[];
 };
 
-const projects: Projects[] = [
+const projects: Project[] = [
   {
     title: "StarLaWeb",
     img: "/images/projects/Twitters_Beta.jpg",
-    description:
-      "The social media website that we manage is the same as other social media with a protection system.",
+    description: "Website media sosial dengan sistem proteksi keamanan.",
     url: "https://github.com/faizinuha/StarLaWeb",
-    category: ["Web"],
-    tech: ["Php Native", "Bootstrap 5", "Tailwind", "Stisla Admin"],
-  },
-  {
-    title: "S-market",
-    img: "/images/projects/S-market.jpg",
-    description: "Website untuk master data yang diperlukan aplikasi sekolah",
-    url: "https://github.com/faizinuha/Tray_Again",
-    category: ["Web"],
-    tech: ["Html & Css"],
+    category: ["Web Development"],
+    tech: ["PHP Native", "Bootstrap 5", "Tailwind"],
   },
   {
     title: "NihonFlixe",
     img: "/images/projects/NihonFlixe.jpg",
-    description:
-      "Website Bioskop Non Template Kami membuat ini dengan Laravel 11 Dan Gunakan Laravel Ui Piur Bootstrap && Css",
+    description: "Website bioskop dengan Laravel 11 dan Bootstrap.",
     url: "https://github.com/faizinuha/Bioskop_V3",
-    category: ["Web"],
-    tech: ["Laravel", "Bootstrap", "Tailwinds", "Jquery"],
-  },
-  {
-    title: "Online_Shop",
-    img: "/images/projects/Onlne_shop.jpg",
-    description: "Website Penjualan Makana basis Php native",
-    url: "https://github.com/faizinuha/online_shop",
-    category: ["Online_Shop"],
-    tech: ["php Native", "Stisla"],
+    category: ["Web Development"],
+    tech: ["Laravel", "Bootstrap", "jQuery"],
   },
   {
     title: "StarMar",
     img: "/images/projects/StarMar.png",
-    description:
-      "Website media sosial yang merupakan gabungan konsep dari Facebook dan Instagram. Proyek ini menampilkan beberapa komponen serupa, seperti timeline, fitur berbagi status, unggah foto, dan komentar. Dikembangkan oleh dua orang, menggunakan Laravel dan Bootstrap untuk menciptakan pengalaman pengguna yang interaktif dan responsif.",
+    description: "Media sosial gabungan konsep Facebook dan Instagram.",
     url: "https://github.com/faizinuha/StarMar",
-    category: ["Web"],
+    category: ["Web Development"],
     tech: ["Laravel", "Bootstrap"],
+  },
+  {
+    title: "Online Shop",
+    img: "/images/projects/Onlne_shop.jpg",
+    description: "Website penjualan makanan berbasis PHP native.",
+    url: "https://github.com/faizinuha/online_shop",
+    category: ["Web Development"],
+    tech: ["PHP Native", "Stisla"],
   },
   {
     title: "Portfolio",
     img: "/images/projects/Portfolio.jpg",
-    description: "My personal portfolio .",
+    description: "Personal portfolio website.",
     url: "https://github.com/faizinuha/portofolio",
-    category: ["Web"],
-    tech: ["Html & Css ", "Portfolio"],
+    category: ["Web Development"],
+    tech: ["HTML", "CSS"],
   },
   {
     title: "Kamus Pali Indonesia",
@@ -358,15 +253,15 @@ const projects: Projects[] = [
     description: "Aplikasi kamus Pali-Indonesia.",
     url: "https://github.com/faizinuha/KamusPaliIndonesia",
     category: ["App"],
-    tech: ["Php", "Bootstrap"],
+    tech: ["PHP", "Bootstrap"],
   },
   {
-    title: "Aplikasi Laundry Beta",
+    title: "Aplikasi Laundry",
     img: "/images/projects/download.png",
-    description: "Aplikasi untuk layanan laundry dalam versi Beta.",
+    description: "Aplikasi layanan laundry.",
     url: "https://github.com/faizinuha/AplikasiLaundary",
     category: ["App"],
-    tech: ["Php", "Bootstrap"],
+    tech: ["PHP", "Bootstrap"],
   },
 ];
 

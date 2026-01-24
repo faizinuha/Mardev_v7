@@ -3,16 +3,11 @@
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { FaFigma, FaSchool } from "react-icons/fa6";
-import { HiMiniBuildingOffice2 } from "react-icons/hi2";
 import { useInView } from "react-intersection-observer";
 
-type Props = {};
-
-const AboutPage = (props: Props) => {
+const AboutPage = () => {
   const { ref: aboutRef, inView: aboutInView } = useInView({ threshold: 0.2, triggerOnce: true });
   const { ref: skillsRef, inView: skillsInView } = useInView({ threshold: 0.2, triggerOnce: true });
-  const { ref: experienceRef, inView: experienceInView } = useInView({ threshold: 0.2, triggerOnce: true });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -32,7 +27,7 @@ const AboutPage = (props: Props) => {
   };
 
   return (
-    <div className="min-h-screen py-10 px-5 lg:px-20 space-y-16">
+    <div className="min-h-screen py-10 max-w-5xl mx-auto space-y-16">
       {/* About Section */}
       <motion.div
         ref={aboutRef}
@@ -40,47 +35,31 @@ const AboutPage = (props: Props) => {
         animate={aboutInView ? "visible" : "hidden"}
         variants={containerVariants}
         className="flex flex-col-reverse lg:flex-row gap-10 items-center"
+        data-testid="about-section"
       >
-        <motion.div variants={itemVariants} className="w-full lg:w-2/3 space-y-4">
-          <h1 className="text-5xl lg:text-6xl font-display font-bold">
-            <span className="gradient-text">About Me</span>
+        <motion.div variants={itemVariants} className="flex-1 space-y-4">
+          <h1 className="text-4xl lg:text-5xl font-bold">
+            <span className="text-sakura-gradient">About Me</span>
           </h1>
-          <div className="space-y-4 text-muted-foreground leading-relaxed">
-            <p>
-              Hi, I'm <span className="text-primary font-semibold">Abdul Rozak</span>, a frontend and backend Developer with a basic
-              understanding of Backend, Web Designer (Figma, Canva), and a
-              self-taught UI Programmer from Indonesia/Japan. I am passionate about
-              creating intuitive user interfaces and developing functional web
-              applications.
-            </p>
-            <p>
-              I enjoy working with both frontend and backend technologies, and
-              I'm constantly improving my skills. My learning journey has been
-              shaped by hands-on experience and the pursuit of knowledge through
-              online resources and personal projects.
-            </p>
-            <p>
-              In my free time, I like exploring new design tools, creating
-              prototypes, and learning about the latest web development trends.
-              I also love playing around with design concepts and experimenting
-              with different UI designs.
-            </p>
-          </div>
+          <p className="text-muted-foreground leading-relaxed">
+            Hai, saya <span className="text-primary font-semibold">Zaki</span> - 
+            seorang Backend Developer dari Indonesia. Fokus utama saya adalah pengembangan 
+            aplikasi web menggunakan Laravel/PHP, dengan kemampuan tambahan di React dan C#.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            Saya senang membangun sistem backend yang solid, API yang efisien, 
+            dan solusi database yang optimal.
+          </p>
         </motion.div>
 
-        <motion.div
-          variants={itemVariants}
-          whileHover={{ rotate: 0, scale: 1.05 }}
-          className="relative"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur-2xl opacity-30" />
+        <motion.div variants={itemVariants} className="relative">
+          <div className="absolute inset-0 bg-primary/20 rounded-2xl blur-2xl" />
           <Image
-            src={"/images/news.jpeg"}
-            alt="Abdul Rozak"
-            loading="lazy"
-            width={1000}
-            height={1000}
-            className="relative w-64 lg:w-80 rounded-2xl border-4 border-primary/30 shadow-2xl object-cover rotate-3 hover:rotate-0 transition-transform duration-300"
+            src="/images/Avatar.png"
+            alt="Zaki"
+            width={280}
+            height={280}
+            className="relative rounded-2xl border-2 border-primary/20 shadow-soft object-cover"
           />
         </motion.div>
       </motion.div>
@@ -92,80 +71,73 @@ const AboutPage = (props: Props) => {
         animate={skillsInView ? "visible" : "hidden"}
         variants={containerVariants}
         className="space-y-8"
+        data-testid="skills-section"
       >
-        <motion.h2 variants={itemVariants} className="text-4xl lg:text-5xl font-display font-bold text-center">
-          <span className="gradient-text-ocean">Skillset</span>
+        <motion.h2 variants={itemVariants} className="text-3xl font-bold text-center">
+          <span className="text-sakura-gradient">Skills</span>
         </motion.h2>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Language */}
-          <motion.div
-            variants={itemVariants}
-            className="bg-card border border-border rounded-2xl p-6 hover:border-primary transition-all hover:shadow-lg"
-          >
-            <h3 className="text-2xl font-semibold mb-4 text-primary">💻 Languages</h3>
-            <div className="grid grid-cols-2 gap-3">
-              {language.map((item: string, i: number) => (
-                <motion.div
-                  key={i + "language"}
-                  whileHover={{ scale: 1.05, x: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Badge
-                    className="w-full justify-center py-2 cursor-pointer hover:bg-primary hover:text-primary-foreground transition-all"
-                    variant={"secondary"}
-                  >
-                    {item}
-                  </Badge>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* frontend and backend */}
-          <motion.div
-            variants={itemVariants}
-            className="bg-card border border-border rounded-2xl p-6 hover:border-secondary transition-all hover:shadow-lg"
-          >
-            <h3 className="text-2xl font-semibold mb-4 text-secondary">🎨 Frontend</h3>
-            <div className="grid grid-cols-2 gap-3">
-              {frontend.map((item: string, i: number) => (
-                <motion.div
-                  key={i + "frontend"}
-                  whileHover={{ scale: 1.05, x: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Badge
-                    className="w-full justify-center py-2 cursor-pointer hover:bg-secondary hover:text-secondary-foreground transition-all"
-                    variant={"secondary"}
-                  >
-                    {item}
-                  </Badge>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Backend */}
           <motion.div
             variants={itemVariants}
-            className="bg-card border border-border rounded-2xl p-6 hover:border-accent transition-all hover:shadow-lg"
+            className="bg-card border border-border rounded-xl p-5 card-hover"
+            data-testid="backend-skills"
           >
-            <h3 className="text-2xl font-semibold mb-4 text-accent">⚙️ Backend</h3>
-            <div className="grid grid-cols-2 gap-3">
-              {backend.map((item: string, i: number) => (
-                <motion.div
-                  key={i + "backend"}
-                  whileHover={{ scale: 1.05, x: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Badge
-                    className="w-full justify-center py-2 cursor-pointer hover:bg-accent hover:text-accent-foreground transition-all"
-                    variant={"secondary"}
-                  >
-                    {item}
-                  </Badge>
-                </motion.div>
+            <h3 className="text-lg font-semibold mb-3 text-primary">Backend</h3>
+            <div className="flex flex-wrap gap-2">
+              {backend.map((item, i) => (
+                <Badge key={i} variant="secondary" className="text-xs">
+                  {item}
+                </Badge>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Frontend */}
+          <motion.div
+            variants={itemVariants}
+            className="bg-card border border-border rounded-xl p-5 card-hover"
+            data-testid="frontend-skills"
+          >
+            <h3 className="text-lg font-semibold mb-3 text-primary">Frontend</h3>
+            <div className="flex flex-wrap gap-2">
+              {frontend.map((item, i) => (
+                <Badge key={i} variant="secondary" className="text-xs">
+                  {item}
+                </Badge>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Mobile */}
+          <motion.div
+            variants={itemVariants}
+            className="bg-card border border-border rounded-xl p-5 card-hover"
+            data-testid="mobile-skills"
+          >
+            <h3 className="text-lg font-semibold mb-3 text-primary">Mobile</h3>
+            <div className="flex flex-wrap gap-2">
+              {mobile.map((item, i) => (
+                <Badge key={i} variant="secondary" className="text-xs">
+                  {item}
+                </Badge>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Desktop */}
+          <motion.div
+            variants={itemVariants}
+            className="bg-card border border-border rounded-xl p-5 card-hover"
+            data-testid="desktop-skills"
+          >
+            <h3 className="text-lg font-semibold mb-3 text-primary">Desktop</h3>
+            <div className="flex flex-wrap gap-2">
+              {desktop.map((item, i) => (
+                <Badge key={i} variant="secondary" className="text-xs">
+                  {item}
+                </Badge>
               ))}
             </div>
           </motion.div>
@@ -173,129 +145,43 @@ const AboutPage = (props: Props) => {
           {/* Tools */}
           <motion.div
             variants={itemVariants}
-            className="bg-card border border-border rounded-2xl p-6 hover:border-primary transition-all hover:shadow-lg"
+            className="bg-card border border-border rounded-xl p-5 card-hover md:col-span-2"
+            data-testid="tools-skills"
           >
-            <h3 className="text-2xl font-semibold mb-4 text-primary">🛠️ Tools</h3>
-            <div className="grid grid-cols-2 gap-3">
-              {tools.map((item: string, i: number) => (
-                <motion.div
-                  key={i + "tools"}
-                  whileHover={{ scale: 1.05, x: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Badge
-                    className="w-full justify-center py-2 cursor-pointer hover:bg-primary hover:text-primary-foreground transition-all"
-                    variant={"secondary"}
-                  >
-                    {item}
-                  </Badge>
-                </motion.div>
+            <h3 className="text-lg font-semibold mb-3 text-primary">Tools</h3>
+            <div className="flex flex-wrap gap-2">
+              {tools.map((item, i) => (
+                <Badge key={i} variant="secondary" className="text-xs">
+                  {item}
+                </Badge>
               ))}
             </div>
           </motion.div>
         </div>
       </motion.div>
 
-      {/* Experience Section */}
-      <motion.div
-        ref={experienceRef}
-        initial="hidden"
-        animate={experienceInView ? "visible" : "hidden"}
-        variants={containerVariants}
-        className="space-y-8"
-      >
-        <motion.h2
-          variants={itemVariants}
-          className="flex items-center gap-3 text-4xl font-display font-bold"
-        >
-          <HiMiniBuildingOffice2 className="text-primary" />
-          <span className="gradient-text-sunset">Experience</span>
-        </motion.h2>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {experience.map((item: Experience, index: number) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              whileHover={{ y: -5, boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
-              className="bg-card border-2 border-border rounded-2xl p-6 transition-all relative overflow-hidden group"
-            >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative z-10">
-                <h3 className="text-xl font-semibold text-primary mb-2">{item.title}</h3>
-                <p className="text-foreground font-medium">{item.position}</p>
-                <p className="text-sm text-muted-foreground mt-1">{item.years}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Education Section */}
+      {/* Experience */}
       <motion.div
         initial="hidden"
-        animate={experienceInView ? "visible" : "hidden"}
+        animate={skillsInView ? "visible" : "hidden"}
         variants={containerVariants}
-        className="space-y-8"
+        className="space-y-6"
+        data-testid="experience-section"
       >
-        <motion.h2
-          variants={itemVariants}
-          className="flex items-center gap-3 text-4xl font-display font-bold"
-        >
-          <FaSchool className="text-secondary" />
-          <span className="gradient-text-forest">Education</span>
+        <motion.h2 variants={itemVariants} className="text-3xl font-bold text-center">
+          <span className="text-sakura-gradient">Experience</span>
         </motion.h2>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {education.map((item: Education, index: number) => (
+        <div className="space-y-4">
+          {experience.map((item, i) => (
             <motion.div
-              key={index}
+              key={i}
               variants={itemVariants}
-              whileHover={{ y: -5, boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
-              className="bg-card border-2 border-border rounded-2xl p-6 transition-all relative overflow-hidden group"
+              className="bg-card border border-border rounded-xl p-5 card-hover"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-secondary/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative z-10">
-                <h3 className="text-xl font-semibold text-secondary mb-2">{item.name}</h3>
-                <p className="text-foreground font-medium">{item.position}</p>
-                <p className="text-sm text-muted-foreground">{item.major}</p>
-                <p className="text-sm text-muted-foreground mt-1">{item.duration}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Web Design Section */}
-      <motion.div
-        initial="hidden"
-        animate={experienceInView ? "visible" : "hidden"}
-        variants={containerVariants}
-        className="space-y-8"
-      >
-        <motion.h2
-          variants={itemVariants}
-          className="flex items-center gap-3 text-4xl font-display font-bold"
-        >
-          <FaFigma className="text-accent" />
-          <span className="gradient-text">Web Design</span>
-        </motion.h2>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {Webdesain.map((item: Education, index: number) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              whileHover={{ y: -5, boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}
-              className="bg-card border-2 border-border rounded-2xl p-6 transition-all relative overflow-hidden group"
-            >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative z-10">
-                <h3 className="text-xl font-semibold text-accent mb-2">{item.name}</h3>
-                <p className="text-foreground font-medium">{item.position}</p>
-                <p className="text-sm text-muted-foreground">{item.major}</p>
-                <p className="text-sm text-muted-foreground mt-1">{item.duration}</p>
-              </div>
+              <h3 className="font-semibold text-primary">{item.title}</h3>
+              <p className="text-sm text-foreground">{item.position}</p>
+              <p className="text-xs text-muted-foreground mt-1">{item.years}</p>
             </motion.div>
           ))}
         </div>
@@ -304,72 +190,22 @@ const AboutPage = (props: Props) => {
   );
 };
 
-type Experience = {
-  title: string;
-  position: string;
-  years: string;
-};
-
-type Education = {
-  name: string;
-  position: string;
-  major: string;
-  duration: string;
-};
-
-const language = ["Html & Css", "JavaScript", "PHP", "React", "Next", "TypeScript", "C#"];
-
-const frontend = [
-  "React.JS",
-  "Next.JS",
-  "Tailwind CSS",
-  "Bootstrap",
-  "Figma",
-  "Canva",
-  "ShadCn",
-];
-
-const tools = [
-  "Figma",
-  "Canva",
-  "Git",
-  "VS Code",
-  "Docker",
-  "Vercel",
-  "ChatGPT 4.1",
-  "Nginx",
-];
-
-const backend = ["Node.js", "Express", "Supabase", "MySQL", "PostgreSQL", "MongoDB"];
+const backend = ["Laravel", "PHP", "Node.js", "Express", "MySQL", "PostgreSQL", "MongoDB", "Supabase"];
+const frontend = ["React.js", "Next.js", "React + Vite", "HTML", "CSS", "JavaScript", "TypeScript", "Tailwind CSS"];
+const mobile = ["React + Vite + Capacitor"];
+const desktop = ["C# + WPF", "Electron"];
+const tools = ["Git", "VS Code", "Docker", "Nginx", "Vercel", "Figma"];
 
 const experience = [
   {
     title: "PT HUMMA TEKNOLOGI INDONESIA",
     position: "Frontend Developer",
-    years: "2023-Present",
+    years: "2023 - Present",
   },
   {
-    title: "UI School (Self-Taught)",
-    position: "Frontend Developer, Backend",
-    years: "2024-Present",
-  },
-];
-
-const education = [
-  {
-    name: "SMK Al Azhar",
-    position: "FrontEnd | Backend",
-    major: "Rekayasa Perangkat Lunak",
-    duration: "2020-2023",
-  },
-];
-
-const Webdesain = [
-  {
-    name: "UI UX",
-    position: "Figma Designer",
-    major: "Canva | Lovart AI",
-    duration: "2023-Present",
+    title: "Self-Taught Developer",
+    position: "Backend & Frontend",
+    years: "2024 - Present",
   },
 ];
 

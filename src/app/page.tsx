@@ -1,23 +1,19 @@
 "use client";
 
-import SosmedLink from "@/components/fragments/SosmedLink";
-import { GitHubLogoIcon, InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
+import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { ReactNode, useEffect, useState } from "react";
-import { useInView } from "react-intersection-observer";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { HiOutlineMail } from "react-icons/hi";
 
 export default function Home() {
   const [displayText, setDisplayText] = useState('');
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const texts = [
-    "Frontend Developer",
-    "Backend Developer"
-  ];
+  const texts = ["Backend Developer", "Laravel Specialist", "Full Stack Dev"];
 
-  // Advanced Typing Animation
   useEffect(() => {
     const currentText = texts[currentTextIndex];
     const timeout = setTimeout(() => {
@@ -36,278 +32,205 @@ export default function Home() {
         }
       }
     }, isDeleting ? 50 : 100);
-
     return () => clearTimeout(timeout);
   }, [displayText, isDeleting, currentTextIndex]);
 
-  const { ref: skillsRef, inView: skillsInView } = useInView({
-    threshold: 0.2,
-    triggerOnce: true,
-  });
-
-  type SosMed = {
-    icon: ReactNode;
-    url: string;
-    label: string;
-  };
-
-  const sosMed: SosMed[] = [
-    {
-      icon: <InstagramLogoIcon width={24} height={24} />,
-      url: "#",
-      label: "Instagram"
-    },
-    {
-      icon: <GitHubLogoIcon width={24} height={24} />,
-      url: "#",
-      label: "GitHub"
-    },
-    {
-      icon: <LinkedInLogoIcon width={24} height={24} />,
-      url: "#",
-      label: "LinkedIn"
-    },
+  const skills = [
+    { name: "Laravel / PHP", icon: "🔧" },
+    { name: "React / Next.js", icon: "⚛" },
+    { name: "C# / .NET", icon: "💎" },
+    { name: "Mobile Dev", icon: "📱" },
+    { name: "Desktop App", icon: "🖥" },
+    { name: "Database", icon: "🗄" },
   ];
 
-  type Skill = {
-    name: string;
-    description: string;
-    icon: string;
-  };
-
-  const skills: Skill[] = [
-    { name: "HTML & CSS", description: "Building the structure and style of web pages.", icon: "🎨" },
-    { name: "JavaScript", description: "Adding interactivity to web pages.", icon: "⚡" },
-    { name: "PHP", description: "Server-side scripting for web development.", icon: "🐘" },
-    { name: "Tailwind CSS", description: "Utility-first CSS framework for styling.", icon: "💨" },
-    { name: "Bootstrap 5", description: "Popular CSS framework for web design.", icon: "🅱️" },
-    { name: "Python", description: "Python Beginner", icon: "🐍" },
-    { name: "GitHub", description: "Version control for collaborative projects.", icon: "🔧" },
+  const socialLinks = [
+    { icon: <GitHubLogoIcon className="w-5 h-5" />, url: "https://github.com/faizinuha", label: "GitHub" },
+    { icon: <LinkedInLogoIcon className="w-5 h-5" />, url: "#", label: "LinkedIn" },
+    { icon: <HiOutlineMail className="w-5 h-5" />, url: "mailto:zaki@example.com", label: "Email" },
   ];
-
-  // Animation Variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 100,
-        damping: 10
-      }
-    }
-  };
-
-  const imageVariants = {
-    hidden: { scale: 0.8, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 100,
-        damping: 15
-      }
-    }
-  };
 
   return (
-    <div className="relative overflow-hidden min-h-screen">
-      {/* Enhanced Background Decorations */}
-      <div className="absolute inset-0 z-0">
-        <motion.div
-          className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full blur-3xl opacity-20"
-          animate={{
-            y: [0, -30, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="absolute bottom-0 right-0 w-72 h-72 bg-gradient-to-r from-pink-500 to-yellow-500 rounded-full blur-3xl opacity-20"
-          animate={{
-            y: [0, 30, 0],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
-          }}
-        />
-        <motion.div
-          className="absolute top-1/2 left-1/2 w-64 h-64 bg-gradient-to-r from-green-500 to-cyan-500 rounded-full blur-3xl opacity-15"
-          animate={{
-            x: [-100, 100, -100],
-            y: [-50, 50, -50],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
+    <div className="relative min-h-[calc(100vh-5rem)] overflow-hidden">
+      {/* Sakura Petals Background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-3 h-3 rounded-full bg-primary/30"
+            style={{
+              left: `${15 + i * 15}%`,
+              top: `${10 + (i % 3) * 20}%`,
+            }}
+            animate={{
+              y: [0, 100, 0],
+              x: [0, 30, 0],
+              rotate: [0, 360],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              duration: 8 + i * 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: i * 0.5,
+            }}
+          />
+        ))}
       </div>
 
       {/* Main Content */}
-      <motion.div
-        className="relative z-10 flex flex-col gap-16 py-10 lg:py-20"
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
-      >
+      <div className="relative z-10 max-w-6xl mx-auto py-16 lg:py-24">
         {/* Hero Section */}
-        <div className="flex flex-col gap-8 lg:flex-row lg:justify-evenly lg:items-center px-5 lg:px-10">
-          <motion.div className="p-0 m-0 space-y-6" variants={itemVariants}>
-            <div>
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+          {/* Text Content */}
+          <motion.div
+            className="flex-1 text-center lg:text-left space-y-6"
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="space-y-2">
+              <motion.p
+                className="text-muted-foreground text-lg"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
+                こんにちは、私は
+              </motion.p>
               <motion.h1
-                className="text-5xl md:text-6xl lg:text-8xl text-center lg:text-start font-display font-extrabold"
-                variants={itemVariants}
+                className="text-5xl lg:text-7xl font-bold"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
               >
-                <span className="hidden lg:inline text-foreground/80">I'm</span>
-                <br />
-                <span className="gradient-text-ocean">Zaki</span>
+                <span className="text-sakura-gradient">Zaki</span>
               </motion.h1>
-
-              <motion.h2
-                className="text-xl md:text-2xl lg:text-3xl text-center lg:text-start mt-4 font-medium min-h-[2.5rem]"
-                variants={itemVariants}
+              <motion.div
+                className="h-10 flex items-center justify-center lg:justify-start"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
               >
-                <span className="gradient-text">{displayText}</span>
-                <span className="blinking-cursor text-primary">|</span>
-              </motion.h2>
+                <span className="text-xl lg:text-2xl text-muted-foreground">
+                  {displayText}
+                </span>
+                <span className="ml-1 text-primary animate-pulse">|</span>
+              </motion.div>
             </div>
+
+            <motion.p
+              className="text-muted-foreground max-w-md mx-auto lg:mx-0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              Backend Developer dari Indonesia. Berpengalaman dalam Laravel, PHP, dan pengembangan aplikasi web modern.
+            </motion.p>
 
             {/* CTA Buttons */}
             <motion.div
-              className="flex gap-4 mt-6 justify-center lg:justify-start flex-wrap"
-              variants={itemVariants}
+              className="flex flex-wrap gap-4 justify-center lg:justify-start"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
             >
-              <motion.button
-                className="group relative px-8 py-3 bg-primary text-primary-foreground rounded-full font-semibold overflow-hidden transition-smooth"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="relative z-10">View My Work</span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600"
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: 0 }}
-                  transition={{ duration: 0.3 }}
-                />
-              </motion.button>
-
-              <motion.button
-                className="px-8 py-3 border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-primary-foreground transition-smooth"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Download Resume
-              </motion.button>
+              <Link href="/projects">
+                <motion.button
+                  data-testid="view-projects-btn"
+                  className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium shadow-soft card-hover"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Lihat Projects
+                </motion.button>
+              </Link>
+              <Link href="/contact">
+                <motion.button
+                  data-testid="contact-btn"
+                  className="px-6 py-3 border border-border rounded-lg font-medium card-hover"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Hubungi Saya
+                </motion.button>
+              </Link>
             </motion.div>
 
-            {/* Social Media Links */}
+            {/* Social Links */}
             <motion.div
-              className="flex gap-4 mt-6 justify-center lg:justify-start"
-              variants={itemVariants}
+              className="flex gap-3 justify-center lg:justify-start pt-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7 }}
             >
-              {sosMed.map((item, i) => (
-                <motion.div
+              {socialLinks.map((social, i) => (
+                <motion.a
                   key={i}
-                  whileHover={{ scale: 1.1, y: -5 }}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid={`social-link-${social.label.toLowerCase()}`}
+                  className="p-3 rounded-lg bg-card border border-border hover:border-primary hover:text-primary transition-colors"
+                  whileHover={{ y: -3 }}
                   whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring" as const, stiffness: 400, damping: 10 }}
+                  aria-label={social.label}
                 >
-                  <SosmedLink icon={item.icon} url={item.url} />
-                </motion.div>
+                  {social.icon}
+                </motion.a>
               ))}
             </motion.div>
           </motion.div>
 
-          {/* Profile Image with Enhanced Animation */}
+          {/* Profile Image */}
           <motion.div
-            variants={imageVariants}
-            whileHover={{
-              scale: 1.05,
-              rotate: 5, // Changed from array to single value to avoid spring error
-              transition: { duration: 0.3 }
-            }}
             className="relative"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full blur-2xl opacity-30 animate-pulse" />
-            <Image
-              src="/images/Avatar.png"
-              alt="John"
-              loading="eager"
-              width={800}
-              height={800}
-              priority
-              className="relative w-64 h-64 lg:w-80 lg:h-80 rounded-full border-4 border-primary/30 shadow-2xl mx-auto object-cover"
-            />
+            <div className="absolute inset-0 bg-primary/20 rounded-full blur-3xl" />
+            <div className="relative w-64 h-64 lg:w-80 lg:h-80">
+              <Image
+                src="/images/Avatar.png"
+                alt="Zaki"
+                fill
+                priority
+                className="object-cover rounded-full border-4 border-primary/20 shadow-soft"
+              />
+            </div>
           </motion.div>
         </div>
 
         {/* Skills Section */}
         <motion.div
-          ref={skillsRef}
-          className="w-full px-5 lg:px-10"
-          initial="hidden"
-          animate={skillsInView ? "visible" : "hidden"}
-          variants={containerVariants}
+          className="mt-20 lg:mt-28"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
         >
-          <motion.h2
-            className="text-4xl lg:text-5xl font-display font-bold text-center mb-10 gradient-text"
-            variants={itemVariants}
-          >
-            Skills & Expertise
-          </motion.h2>
+          <h2 className="text-2xl lg:text-3xl font-bold text-center mb-10">
+            <span className="text-sakura-gradient">Tech Stack</span>
+          </h2>
 
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-            variants={containerVariants}
-          >
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {skills.map((skill, i) => (
               <motion.div
                 key={i}
-                variants={itemVariants}
-                whileHover={{
-                  y: -10,
-                  boxShadow: "0 20px 40px rgba(0, 0, 0, 0.2)"
-                }}
-                className="group relative bg-card border border-border rounded-2xl p-6 text-center transition-smooth overflow-hidden"
+                data-testid={`skill-card-${i}`}
+                className="flex flex-col items-center gap-2 p-5 bg-card border border-border rounded-lg card-hover"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9 + i * 0.1 }}
+                whileHover={{ y: -5 }}
               >
-                {/* Gradient Background on Hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                <div className="relative z-10">
-                  <div className="text-5xl mb-3">{skill.icon}</div>
-                  <h3 className="text-xl font-semibold mb-2 text-foreground group-hover:text-primary transition-colors">
-                    {skill.name}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">{skill.description}</p>
-                </div>
+                <span className="text-2xl">{skill.icon}</span>
+                <span className="text-sm font-medium text-center">{skill.name}</span>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 }

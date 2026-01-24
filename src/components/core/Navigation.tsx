@@ -1,149 +1,104 @@
 "use client"
+
 import { motion, useScroll, useSpring } from 'framer-motion'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { ThemeChangerButton } from '../elements'
-import { NavigationLink } from '../fragments'
 
-type Props = {}
+const Navigation = () => {
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isHidden, setIsHidden] = useState(false)
+  const [lastScrollY, setLastScrollY] = useState(0)
+  const pathname = usePathname()
 
-const Navigation = (props: Props) => {
-    const [prevScrollpos, setPrevScrollpos] = useState(typeof window !== 'undefined' ? window.pageYOffset : 0);
-    const [top, setTop] = useState(0)
-    const [isScrolled, setIsScrolled] = useState(false)
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  })
 
-    // Scroll Progress Bar
-    const { scrollYProgress } = useScroll()
-    const scaleX = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001
-    })
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      setIsScrolled(currentScrollY > 20)
+      setIsHidden(currentScrollY > lastScrollY && currentScrollY > 100)
+      setLastScrollY(currentScrollY)
+    }
 
-    useEffect(() => {
-        const handleScroll = () => {
-          const currentScrollPos = typeof window !== 'undefined' ? window.pageYOffset : 0;
-          
-          // Show/Hide navbar based on scroll direction
-          if (prevScrollpos > currentScrollPos) {
-            setTop(0);
-          } else {
-            setTop(-80);
-          }
-          
-          // Add background blur when scrolled
-          setIsScrolled(currentScrollPos > 50)
-          
-          setPrevScrollpos(currentScrollPos);
-        };
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [lastScrollY])
 
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-          window.removeEventListener('scroll', handleScroll);
-        };
-      }, [prevScrollpos]);
+  const navLinks = [
+    { url: "/", text: "Home" },
+    { url: "/about", text: "About" },
+    { url: "/projects", text: "Projects" },
+    { url: "/contact", text: "Contact" },
+  ]
 
-    return (
-        <>
-            {/* Scroll Progress Bar */}
-            <motion.div
-                className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 origin-left z-[1001]"
-                style={{ scaleX }}
-            />
+  return (
+    <>
+      {/* Scroll Progress */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-0.5 bg-primary origin-left z-[1001]"
+        style={{ scaleX }}
+      />
 
-            <motion.nav 
-                style={{
-                    top: `${(top < 0 ? top-10 : top)}px`,
-                }} 
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className={`
-                    z-[1000] w-full fixed top-0 h-auto flex items-center justify-between py-4 px-5 lg:px-20
-                    transition-all duration-300
-                    ${isScrolled 
-                        ? 'glass-dark shadow-lg' 
-                        : 'bg-transparent'
-                    }
-                `}
+      <motion.nav
+        className={`fixed top-0 w-full z-[1000] transition-all duration-300 ${
+          isScrolled ? 'glass-shoji shadow-soft' : 'bg-transparent'
+        }`}
+        initial={{ y: -100 }}
+        animate={{ y: isHidden ? -100 : 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <div className="max-w-6xl mx-auto px-4 lg:px-8 py-4 flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" data-testid="nav-logo">
+            <motion.h1
+              className="text-xl font-bold text-sakura-gradient hidden lg:block"
+              whileHover={{ scale: 1.02 }}
             >
-                {/* Logo/Brand */}
-                <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="hidden lg:block"
-                >
-                    <h1 className="text-2xl font-display font-bold gradient-text">
-                        Portfolio
-                    </h1>
-                </motion.div>
+              Zaki
+            </motion.h1>
+          </Link>
 
-                {/* Navigation Links */}
-                <div className='flex justify-center group w-full lg:w-auto'>
-                    <motion.ul 
-                        className={`
-                            flex lg:gap-8 gap-4 px-6 py-3 rounded-full
-                            transition-all duration-300
-                            ${isScrolled 
-                                ? 'glass border border-border/50' 
-                                : 'glass-dark border border-white/10'
-                            }
-                            hover:border-primary/50
-                        `}
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2, duration: 0.5 }}
-                    >
-                        {link.map((nav: Link, i: number) => (
-                            <motion.li
-                                key={i}
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.3 + (i * 0.1) }}
-                            >
-                                <NavigationLink
-                                    url={nav.url}
-                                    text={nav.text}
-                                />
-                            </motion.li>
-                        ))}
-                    </motion.ul>
-                </div>
+          {/* Nav Links */}
+          <div className="flex items-center gap-1 mx-auto lg:mx-0">
+            <ul className={`flex gap-1 px-2 py-1.5 rounded-lg ${
+              isScrolled ? 'bg-muted/50' : 'glass-shoji'
+            }`}>
+              {navLinks.map((nav, i) => {
+                const isActive = pathname === nav.url
+                return (
+                  <li key={i}>
+                    <Link href={nav.url} data-testid={`nav-link-${nav.text.toLowerCase()}`}>
+                      <motion.span
+                        className={`block px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                          isActive
+                            ? 'bg-primary text-primary-foreground'
+                            : 'hover:bg-muted'
+                        }`}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        {nav.text}
+                      </motion.span>
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
 
-                {/* Theme Toggle */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.4 }}
-                >
-                    <ThemeChangerButton />
-                </motion.div>
-            </motion.nav>
-        </>
-    )
+          {/* Theme Toggle */}
+          <ThemeChangerButton />
+        </div>
+      </motion.nav>
+    </>
+  )
 }
-
-type Link = {
-    url: string,
-    text: string
-}
-
-const link = [
-    {
-        url: "/",
-        text: "Home"
-    },
-    {
-        url: "/about",
-        text: "About"
-    },
-    {
-        url: "/projects",
-        text: "Projects"
-    },
-    {
-        url: "/contact",
-        text: "Contact"
-    },
-]
 
 export default Navigation

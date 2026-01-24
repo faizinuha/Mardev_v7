@@ -1,5 +1,6 @@
+import { Footer, ThemeProvider } from "@/components/core";
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import dynamic from "next/dynamic";
 import "./globals.css";
 const Navigation = dynamic(
   () => {
@@ -7,13 +8,10 @@ const Navigation = dynamic(
   },
   { ssr: false }
 );
-import { Footer, ThemeProvider } from "@/components/core";
-import dynamic from "next/dynamic";
-const poppins = Poppins({ subsets: ["latin"], weight:["100","200","400","300","400","500","600","700","800","900"]});
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "My web portfolio",
+  title: "Zaki | Backend Developer",
+  description: "Portfolio Zaki - Backend Developer from Indonesia",
 };
 
 export default function RootLayout({
@@ -23,17 +21,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.className}>
+      <body className="font-sans">
         <ThemeProvider
-        attribute="class"
-        defaultTheme="black"
-        enableSystem
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
         >
-          <Navigation/>
-          <main className="min-h-screen p-10 lg:p-24">
+          <Navigation />
+          <main className="min-h-screen pt-20 px-0">
             {children}
           </main>
-          <Footer/>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
