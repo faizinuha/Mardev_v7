@@ -264,12 +264,20 @@ const projects: Project[] = [
     tech: ["PHP", "Bootstrap"],
   },
   {
-    title: "Aplikasi Laundry",
+    title: "Aplikasi Cms Sekolah",
     img: "/images/cms.png",
-    description: "Aplikasi layanan laundry.",
+    description: "Aplikasi layanan Sekolah untuk Mendata absensi Siswa .",
     url: "https://cabsen.vercel.app",
     category: ["Api", "Web Development"],
     tech: ["React", "Tailwind CSS"],
+  },
+  {
+    title: "Media Sosial Gabungan Facebook dan Instagram",
+    img: "/images/project/image.png",
+    description: "Media sosial gabungan konsep Facebook dan Instagram Anti Gabungan Ai Sama Sekali di dalam website ( Beta ).",
+    url: "https://starmar2.vercel.app",
+    category: ["App", "Web Development", "React+vite"],
+    tech: ["React", "Tailwind CSS","css","vite" ],
   },
 ];
 
