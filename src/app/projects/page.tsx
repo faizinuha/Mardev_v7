@@ -273,7 +273,7 @@ const projects: Project[] = [
   },
   {
     title: "Media Sosial Gabungan Facebook dan Instagram",
-    img: "/images/project/image.png",
+    img: "/images/projects/image.png",
     description: "Media sosial gabungan konsep Facebook dan Instagram Anti Gabungan Ai Sama Sekali di dalam website ( Beta ).",
     url: "https://starmar2.vercel.app",
     category: ["App", "Web Development", "React+vite"],
