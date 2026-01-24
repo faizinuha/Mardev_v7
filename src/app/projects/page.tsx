@@ -263,6 +263,14 @@ const projects: Project[] = [
     category: ["App"],
     tech: ["PHP", "Bootstrap"],
   },
+  {
+    title: "Aplikasi Laundry",
+    img: "/images/cms.png",
+    description: "Aplikasi layanan laundry.",
+    url: "https://cabsen.vercel.app",
+    category: ["Api", "Web Development"],
+    tech: ["React", "Tailwind CSS"],
+  },
 ];
 
 export default ProjectsPage;
